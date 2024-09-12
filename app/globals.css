@@ -3,25 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #36d3b1;
+  --color-secondary: #96c1e9;
+  --color-accent: #6075dc;
+  --color-text: #051610;
+  --color-text-secondary: #eafaf5;
+  --color-background: #f3fcf9;
+  --color-info: #2196F3;
+  --color-sucess: #4CAF50;
+  --color-warning: #ffeb3b;
+  --color-danger: #f44336;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-primary: #2cc9a7;
+    --color-secondary: #164169;
+    --color-accent: #23389f;
+    --color-text: #eafaf5;
+    --color-text-secondary: #051610;
+    --color-background: #030c09;
+    --color-info: #2196F3;
+    --color-sucess: #4CAF50;
+    --color-warning: #ffeb3b;
+    --color-danger: #f44336;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  margin: 0;
+  overflow-x: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.boldheader1{
+  @apply text-7xl font-bold font-poppins;
+}
+.boldheader2{
+  @apply text-6xl font-bold font-poppins;
+}
+.boldheader3{
+  @apply text-5xl font-bold font-poppins;
+}
+.boldheader4{
+  @apply text-4xl font-bold font-poppins;
+}
+
+.semiboldheader1{
+  @apply text-5xl font-semibold font-inter;
+}
+.semiboldheader2{
+  @apply text-3xl font-semibold font-inter;
+}
+.semiboldheader3{
+  @apply text-2xl font-semibold font-inter;
+}
+.semiboldheader4{
+  @apply text-lg font-semibold font-inter;
+}
+
+.basetext{
+  @apply text-base font-inter;
+}
+.boldbasetext{
+  @apply text-base font-bold font-inter;
+}
+.navbarlinks{
+  @apply text-lg font-inter;
+}
+.footertext{
+  @apply text-xs font-inter;
 }
