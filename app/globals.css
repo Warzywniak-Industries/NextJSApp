@@ -69,56 +69,12 @@
     --chart-5: 340 75% 55%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground m-0 overflow-x-hidden font-poppins;
+    @apply bg-background text-foreground;
   }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-.boldheader1{
-  @apply text-7xl font-bold font-poppins;
-}
-.boldheader2{
-  @apply text-6xl font-bold font-poppins;
-}
-.boldheader3{
-  @apply text-5xl font-bold font-poppins;
-}
-.boldheader4{
-  @apply text-4xl font-bold font-poppins;
-}
-
-.semiboldheader1{
-  @apply text-5xl font-semibold font-inter;
-}
-.semiboldheader2{
-  @apply text-3xl font-semibold font-inter;
-}
-.semiboldheader3{
-  @apply text-2xl font-semibold font-inter;
-}
-.semiboldheader4{
-  @apply text-lg font-semibold font-inter;
-}
-
-.basetext{
-  @apply text-base font-inter;
-}
-.boldbasetext{
-  @apply text-base font-bold font-inter;
-}
-.navbarlinks{
-  @apply text-lg font-inter;
-}
-.footertext{
-  @apply text-xs font-inter;
 }
