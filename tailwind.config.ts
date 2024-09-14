@@ -32,8 +32,8 @@ const config = {
 				foreground: 'hsl(var(--accent-foreground))'
 			},
 			card: {
-				DEFAULT: 'hsl(var(--card))',
-				foreground: 'hsl(var(--card-foreground))'
+				DEFAULT: 'var(--card)',
+				foreground: 'var(--card-foreground)'
 			},
 			popover: {
 				DEFAULT: 'hsl(var(--popover))',
@@ -80,10 +80,26 @@ const config = {
         from: { height: "var(--radix-accordion-content-height)" },
         to: { height: "0" },
       },
+	  "wave-right": {
+		"0%": { "background-position-x": "0px" },
+		"100%": { "background-position-x": "1440px" },
+	  },
+	  "wave-left": {
+		"0%": { "background-position-x": "1440px" },
+		"100%": { "background-position-x": "0px" },
+	  },
+	  "wave": {
+		"0%": {transform: "translateY(0)"},
+		"50%": {transform: "translateY(-20px)"},
+		"100%": {transform: "translateY(0)"},
+	  }
     },
     animation: {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
+	  "wave1": "wave-right 35s linear infinite",
+	  "wave2": "wave-left 20s linear infinite",
+	  "waveUpDown": "wave 10s linear infinite",
     },
 	fontFamily: {
 		poppins: ["Poppins", "sans-serif"],
@@ -91,6 +107,9 @@ const config = {
 	},
     },
   },
+  safelist: [
+	"max-w-72",
+  ],
   plugins: [require("tailwindcss-animate")],
 } satisfies Config
 

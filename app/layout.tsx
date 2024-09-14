@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
       <body
-        className="antialiased"
+        className="flex flex-col w-full min-h-[100vh] antialiased gap-y-8"
       >
         <Navbar />
         {children}
