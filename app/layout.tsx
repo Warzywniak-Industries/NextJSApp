@@ -3,6 +3,7 @@ import "./globals.css";
 
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,6 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <AuthProvider>
       <body
         className="antialiased"
       >
@@ -23,6 +25,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+      </AuthProvider>
     </html>
   );
 }
