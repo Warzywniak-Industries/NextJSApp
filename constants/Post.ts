@@ -1,0 +1,1 @@
+export const PostStates = ["Draft", "Published", "Archived"] as const;
