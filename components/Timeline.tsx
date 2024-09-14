@@ -16,7 +16,7 @@ export default function LadingPageTimeline() {
             title: "Create an acoount",
             content: (
                 <div className="flex flex-col gap-y-2 max-w-72">
-                    <h3 className="semiboldheader3 text-text">"Register for an account to get started"</h3>
+                    <h3 className="boldbasetext text-text opacity-70">"Register for an account to get started"</h3>
                     <div className="flex flex-row gap-x-3">
                         <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
                         <Button asChild>
@@ -30,15 +30,15 @@ export default function LadingPageTimeline() {
             title: "Accelerate innovation",
             content: (
                 <div className="flex flex-col">
-                    <h3 className="semiboldheader3">Our AI-powered platform increases the ...</h3>
+                    <h3 className="boldbasetext opacity-70">Our AI-powered platform increases the ...</h3>
                 </div>
             )
         },
         {
             title: "Engage in Conversations",
             content: (
-                <div className="flex flex-col max-w-72">
-                    <h3 className="basetext">As investors start responding, engage in direct messaging within the app and answer questions and provide additional information as needed</h3>
+                <div className="flex flex-col max-w-96 opacity-70">
+                    <h3 className="boldbasetext">As investors start responding, engage in direct messaging within the app and answer questions and provide additional information as needed</h3>
                 </div>
             )
         }

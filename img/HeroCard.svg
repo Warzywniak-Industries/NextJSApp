@@ -16,7 +16,7 @@
 <rect width="56" height="6" rx="3" transform="matrix(0.978148 0.207912 0 1 46.3434 89.7719)" fill="#D7A31D"/>
 <rect width="87" height="5" rx="2.5" transform="matrix(0.978148 0.207912 0 1 46.3434 98.7719)" fill="#AFAFAF"/>
 <rect width="36" height="5" rx="2.5" transform="matrix(0.978148 0.207912 0 1 46.3434 105.772)" fill="#AFAFAF"/>
-<rect width="32" height="32" rx="5" transform="matrix(0.978148 0.207912 0 1 10.152 40.0791)" fill="#006FD5"/>
+<rect width="32" height="32" rx="5" transform="matrix(0.978148 0.207912 0 1 10.152 40.0791)" fill="#941451"/>
 <rect width="110" height="6" rx="3" transform="matrix(0.978148 0.207912 0 1 46.3434 47.7719)" fill="#D7A31D"/>
 <rect width="50" height="5" rx="2.5" transform="matrix(0.978148 0.207912 0 1 46.3434 56.7719)" fill="#AFAFAF"/>
 <path d="M46.3434 66.2719C46.3434 64.8911 47.4382 64.0046 48.7888 64.2916L119.215 79.2613C120.566 79.5483 121.661 80.9003 121.661 82.281C121.661 83.6618 120.566 84.5483 119.215 84.2613L48.7888 69.2916C47.4382 69.0046 46.3434 67.6526 46.3434 66.2719Z" fill="#AFAFAF"/>
@@ -24,12 +24,12 @@
 <rect width="50" height="7" rx="3.5" transform="matrix(0.978148 0.207912 0 1 25.8024 18.4057)" fill="#D9D9D9"/>
 <defs>
 <linearGradient id="paint0_linear_15_88" x1="0" y1="0" x2="200" y2="250" gradientUnits="userSpaceOnUse">
-<stop offset="0.2" stop-color="#EDEDED" stop-opacity="0.5"/>
-<stop offset="1" stop-color="#EDEDED" stop-opacity="0"/>
+<stop offset="0.12" stop-color="#2CC9A7"/>
+<stop offset="1" stop-color="#001D37"/>
 </linearGradient>
 <linearGradient id="paint1_linear_15_88" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse">
-<stop stop-color="#006FD5"/>
-<stop offset="1" stop-color="#006FD4" stop-opacity="0.2"/>
+<stop stop-color="#14AE5C"/>
+<stop offset="1" stop-color="#14AE5C" stop-opacity="0.2"/>
 </linearGradient>
 <linearGradient id="paint2_linear_15_88" x1="55" y1="0" x2="55" y2="6" gradientUnits="userSpaceOnUse">
 <stop stop-color="#D7A31D"/>
