@@ -107,6 +107,9 @@ const config = {
 	},
     },
   },
+  safelist: [
+	"max-w-72",
+  ],
   plugins: [require("tailwindcss-animate")],
 } satisfies Config
 
