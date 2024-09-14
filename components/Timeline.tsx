@@ -30,7 +30,7 @@ export default function LadingPageTimeline() {
             title: "Accelerate innovation",
             content: (
                 <div className="flex flex-col">
-                    <h3 className="text-text semiboldheader3">Our AI-powered platform increases the ...</h3>
+                    <h3 className="semiboldheader3">Our AI-powered platform increases the ...</h3>
                 </div>
             )
         },
@@ -38,14 +38,14 @@ export default function LadingPageTimeline() {
             title: "Engage in Conversations",
             content: (
                 <div className="flex flex-col max-w-72">
-                    <h3 className="text-text basetext">As investors start responding, engage in direct messaging within the app and answer questions and provide additional information as needed</h3>
+                    <h3 className="basetext">As investors start responding, engage in direct messaging within the app and answer questions and provide additional information as needed</h3>
                 </div>
             )
         }
     ]
 
     return (
-        <div className="flex flex-col w-full justify-center">
+        <div className="flex flex-col w-full justify-center px-8 md:px-[11.25%]">
             <Timeline data={TimeLineContent}/>
         </div>
     );
