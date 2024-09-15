@@ -6,8 +6,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { auth, db } from '@/firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
-import { Weights } from './StartupsContext'
-import { pre } from 'framer-motion/client'
+import { Startup, Weights } from '@/types/Startup'
 
 interface UserData {
   email: string;
@@ -16,6 +15,7 @@ interface UserData {
   uid: string;
   accType: "StartupOwner" | "Company" | "Admin";
   prefereces: Weights;
+  startupIds: string[];
 }
 
 interface AuthContextType {
@@ -26,6 +26,8 @@ interface AuthContextType {
   signup: (email: string, password: string, firstName: string, lastName: string) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
+  fetchUserStartups: (userDataObj: UserData) => Promise<any>;
+  startupIds: string[];
   loading: boolean;
 }
 
@@ -37,6 +39,8 @@ const defaultAuthContext: AuthContextType = {
   signup: async () => {},
   login: async () => {},
   logout: async () => {},
+  fetchUserStartups: async () => [],
+  startupIds: [],
   loading: false,
 };
 
@@ -48,10 +52,11 @@ export function useAuth() {
 
 export function AuthProvider(props: { children: any }) {
 
-  const [user, setUser] = useState<User | null>(null)
-  const [userDataObj, setUserDataObj] = useState<UserData | null>(null)
-  const [userEventTypes, setUserEventTypes] = useState<Record<string, any>>({})
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<User | null>(null);
+  const [userDataObj, setUserDataObj] = useState<UserData | null>(null);
+  const [userEventTypes, setUserEventTypes] = useState<Record<string, any>>({});
+  const [startupIds, setStartupIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
 
   // AUTH HAN
@@ -80,7 +85,8 @@ export function AuthProvider(props: { children: any }) {
             entertainment: 0,
             environment: 0,
             security: 0,
-          }
+          },
+          startupIds: [],
         });
         console.log('User data successfully updated');
       })
@@ -99,7 +105,19 @@ export function AuthProvider(props: { children: any }) {
 
     return auth.signOut()
   }
-
+  
+  function fetchUserStartups(userDataObj: UserData) {
+  return getDocs(collection(db, 'startups'))
+    .then((querySnapshot) => {
+      const startups: any[] = [];
+      querySnapshot.forEach((doc) => {
+        if (userDataObj.startupIds.includes(doc.id)) {
+          startups.push(doc.data());
+        }
+      });
+      return startups;
+    });
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -153,6 +171,8 @@ export function AuthProvider(props: { children: any }) {
     signup,
     login,
     logout,
+    fetchUserStartups,
+    startupIds,
     loading
   }
   return (
