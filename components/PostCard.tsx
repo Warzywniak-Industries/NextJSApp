@@ -41,7 +41,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 <Link href={props.post.uid? `/posts/${props.post.uid}` : ""}><CardTitle>{props.post.name}</CardTitle></Link>
             </CardHeader>
             <CardContent>
-                <p className="text-text opacity-70 basetext">{props.post.description}</p>
+                <p className="text-text opacity-70 max-w-full basetext truncate">{props.post.description}</p>
             </CardContent>
             <CardFooter className="flex flex-row gap-x-2">
                 <FontAwesomeIcon icon={faUsers} />

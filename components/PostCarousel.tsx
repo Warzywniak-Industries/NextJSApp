@@ -70,7 +70,7 @@ export default function PostCarousel() {
                     ))}
                     {!(posts.length===0) && posts.map((post, index) => (
                     <CarouselItem key={index} className="max-w-[350px]">
-                        <PostCard post={post} />
+                        <PostCard post={post} classname="text-foreground_secondary"/>
                     </CarouselItem>
                     ))}
                 </CarouselContent>
