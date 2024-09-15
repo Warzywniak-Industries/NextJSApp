@@ -113,6 +113,8 @@ export default function StartupsProvider(props: { children: any }) {
       description: startup.description,
       logo: '',
       thumbails: [],
+      location: startup.location,
+      created: new Date(),
       tags: startup.tags,
       website: startup.website,
       followers: startup.followers,

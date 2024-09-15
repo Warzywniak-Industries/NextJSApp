@@ -81,6 +81,7 @@ export default function PostEditor() {
       description: description,
       images: images.map((image) => image.file),
       tags: tags,
+      location: '',
       website: '', // TODO
       followers: 0
     }

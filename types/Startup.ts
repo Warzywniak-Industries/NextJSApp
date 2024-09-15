@@ -17,6 +17,8 @@ export interface Startup {
   name: string
   description: string
   logo: string
+  location: string
+  created: Date
   thumbails: string[]
   tags: string[]
   website: string
@@ -36,4 +38,5 @@ export interface IncompleteStartup {
   tags: string[]
   website: string
   followers: number
+  location: string
 }
