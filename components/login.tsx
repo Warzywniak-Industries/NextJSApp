@@ -39,42 +39,32 @@ export default function Login() {
     }
     
     setAuthenticating(true)
+    interface AuthError {
+      code: string;
+      message: string;
+    }
+    
     try {
-      await login(email, password)
-    }
-    catch (error: any) {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "Invalid email.",})
-          break
-        case 'auth/user-not-found':
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "User not found.",})
-          break
-        case 'auth/wrong-password':
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "Wrong password.",})
-          break
-        case 'auth/invalid-credential':
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "Invalid credential.",})
-          break
-        default:
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "An error occurred. Please try again later.",})
-          break
-      }
-      console.error(error)
+      await login(email, password);
+    } catch (error) {
+      const authError = error as AuthError;
+      const errorMessages: { [key: string]: string } = {
+        'auth/invalid-email': 'Invalid email.',
+        'auth/user-not-found': 'User not found.',
+        'auth/wrong-password': 'Wrong password.',
+        'auth/invalid-credential': 'Invalid credential.',
+      };
+    
+      const description = errorMessages[authError.code] || 'An error occurred. Please try again later.';
       
-    }
-    finally {
-      setAuthenticating(false)
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description,
+      });
+    
+      console.error(authError);
+    } finally {
+      setAuthenticating(false);
     }
   }
 
@@ -107,7 +97,7 @@ export default function Login() {
       </form>
       <div className="flex items-center justify-center mt-8">
           <span className="text-neutral-600 dark:text-neutral-300 text-sm">
-            Don't have an account?
+            Don&apos;t have an account?
             <Button variant="link" className="ml-1" onClick={handleRedirect}>
               Sign Up
             </Button>
@@ -117,15 +107,6 @@ export default function Login() {
     
   )
 }
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-    </>
-  );
-};
 
 const LabelInputContainer = ({
   children,

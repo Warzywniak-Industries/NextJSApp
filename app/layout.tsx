@@ -5,7 +5,6 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/toaster";
-import StartupsProvider from "@/context/StartupsContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",

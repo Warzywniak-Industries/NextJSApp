@@ -3,12 +3,11 @@ import { cn } from "@/lib/utils";
 import React, { useEffect, useState} from "react";
 
 import { useAuth } from "@/context/AuthContext";
-import StartupsProvider, { useStartups } from "@/context/StartupsContext";
+import { useStartups } from "@/context/StartupsContext";
 import PostCard from "@/components/PostCard";
-import { ProcessedStartup, Startup } from "@/types/Startup";
+import { ProcessedStartup } from "@/types/Startup";
 export default function StartupsList() {
     const [loading, setLoading] = useState<boolean>(true);
-    const [scrollTop, setScrollTop] = useState<number>(0);
 
     const [orderedStartups, setOrderedStartups] = useState<ProcessedStartup[]>()
 

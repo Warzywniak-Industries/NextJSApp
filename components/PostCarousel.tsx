@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import PostCard from "@/components/PostCard";
 import Link from "next/link";
 import {
@@ -12,7 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import { Startup } from "@/types/Startup";
 
@@ -29,14 +28,20 @@ export default function PostCarousel() {
             
             const data = response.docs.map((doc) => doc.data() as Startup).map((item) => {
                 const startup: Startup = {
-                    name: item.name || "Untitled",  // Fallback for missing fields
+                    name: item.name || "Untitled", // Fallback for missing fields
                     description: item.description || "No description available",
-                    followers: item.followers || 0,  // Fallback if followers is missing
+                    followers: item.followers || 0, // Fallback if followers is missing
                     uid: "",
                     logo: "",
                     thumbails: [],
                     tags: [],
                     website: "",
+                    location: "",
+                    created: new Date(),
+                    target: 0,
+                    raised: 0,
+                    authors: [],
+                    goals: []
                 };
                 return startup;
             });

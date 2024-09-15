@@ -12,10 +12,6 @@ export type Goal = {
     icon: string
     rewards: string[]
 }
-
-const initialGoals: Goal[] = [
-]
-
 interface GoalEditorProps {
     goals: Goal[]
     setGoals: (goals: Goal[]) => void

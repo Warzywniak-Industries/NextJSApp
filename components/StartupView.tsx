@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Goal } from "@/components/editor/goalEditor"
-import { UploadedImage } from "@/components/editor/dropZone"
 import { Gallery } from "@/components/post/gallery"
 import '@/fontawesome';
 import React from 'react';
@@ -99,7 +96,7 @@ export default function StartupView({ params }: { params: { uid: string } }) {
             <CardHeader>
               <CardTitle className='flex items-center'>{startup.name}</CardTitle>
               <div className='flex'>
-                {startup.tags ? startup.tags.map((tag, i) => (
+                {startup.tags ? startup.tags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="flex items-center gap-1 me-1 shadow-md">
                     {tag}
                   </Badge>
@@ -121,7 +118,7 @@ export default function StartupView({ params }: { params: { uid: string } }) {
             </CardContent>
           </Card>
           <div className="space-y-4">
-            {goals.map((goal, i) => (
+            {goals.map((goal) => (
               <Card key={goal.id} className='shadow-md bg-white relative'>
                 {raised >= goal.price && (
                   <div className="absolute inset-0 z-0">

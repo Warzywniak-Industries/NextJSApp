@@ -1,8 +1,7 @@
 import React from "react";
-import Image from "next/image";
 
 import { FooterLinks } from "@/constants/Navigation";
-import { ImageSpacer1, ImageSpacer2 } from "@/img";
+import { ImageSpacer1 } from "@/img";
 
 const Footer: React.FC = () => {
     return (

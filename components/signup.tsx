@@ -8,8 +8,8 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "./ui/use-toast";
-import { useHistory} from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
+import { FirebaseError } from "firebase/app";
 
 export default function Signup() {
 
@@ -20,7 +20,7 @@ export default function Signup() {
         router.push('./login');
     };
 
-    const [authenticating, setAuthenticating] = useState(false)
+    const [, setAuthenticating] = useState(false)
 
     const [email, setEmail] = useState('')
     const [password, setPassword]= useState('')
@@ -56,32 +56,37 @@ export default function Signup() {
         return
     }
     handleSignUp()
-
-    const history = useHistory();
-    history.push('/');
   };
 
   async function handleSignUp() {
     setAuthenticating(true)
     // Call API to create user
+    
     try {
-      await signup (email, password, firstName, lastName)
-    }
-    catch (error: any) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "Email already in use.",})
-          break
-        default:
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "An error occurred.",})
+      await signup(email, password, firstName, lastName);
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: "Email already in use.",
+            });
+            break;
+          default:
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: "An error occurred.",
+            });
+        }
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "An unknown error occurred.",
+        });
       }
-    }
-    finally {
-      setAuthenticating(false)
+    } finally {
+      setAuthenticating(false);
     }
   }
   return (

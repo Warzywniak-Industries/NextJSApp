@@ -7,11 +7,9 @@ import HeroBanner from "@/components/HeroBanner";
 import LadingPageTimeline from "@/components/Timeline";
 import PostCarousel from "@/components/PostCarousel";
 import { db } from "@/firebase";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { Creators } from "@/components/Creators";
 import FaqSection from "@/components/FaqSection";
-import Avatar from 'boring-avatars';
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Home() {
 

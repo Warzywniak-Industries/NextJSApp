@@ -13,7 +13,7 @@ const FaqSection: React.FC = () => {
         <div className="flex flex-col px-8 md:px-[11.25%] justify-center align-middle w-full">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                    <AccordionTrigger className="text-texxt semiboldheader3">What's all of this about?</AccordionTrigger>
+                    <AccordionTrigger className="text-texxt semiboldheader3">What&apos;s all of this about?</AccordionTrigger>
                     <AccordionContent>
                         This is a platform that helps you build a better product while advertising it to potential investors and customers while providing best practices and resources to help you succeed.
                     </AccordionContent>

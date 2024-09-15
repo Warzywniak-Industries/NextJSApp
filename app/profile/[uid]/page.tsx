@@ -3,9 +3,9 @@
 import ProfileForUser from "@/components/ProfileForUser";
 import { useAuth } from "@/context/AuthContext";
 
-export default function Page({ params }: { params: { uid: string } }) {
+export default function Page() {
     
-    const { loading, user, userDataObj } = useAuth()
+    const { loading } = useAuth()
     
     if(loading)
     {

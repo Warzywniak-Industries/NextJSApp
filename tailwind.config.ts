@@ -10,13 +10,13 @@ const config = {
 	],
 	prefix: "",
 	theme: {
-    	container: {
-    		center: 'true',
-    		padding: '2rem',
-    		screens: {
-    			'2xl': '1400px'
-    		}
-    	},
+		container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px'
+			}
+		},
     	extend: {
     		colors: {
     			primary: {
@@ -105,8 +105,11 @@ const config = {
     				'gradient-border': 'gradient-border 3s linear infinite'
     			},
     			fontFamily: {
-    				poppins: ["Poppins", "sans-serif"],
-    				inter: ["Inter", "sans-serif"]
+					poppins: {
+					  DEFAULT: "Poppins",
+					  sans: "sans-serif"
+					},
+					inter: "Inter, sans-serif"
     			}
     		},
     		borderRadius: {

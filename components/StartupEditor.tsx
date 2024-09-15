@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { TagSelector } from "@/components/editor/tagSelector";
 import { Label } from "@/components/ui/label";
@@ -10,9 +10,7 @@ import { GoalEditor, Goal } from "@/components/editor/goalEditor"
 import ReactQuill from 'react-quill';
 import { DropZone, UploadedImage } from "@/components/editor/dropZone";
 import { IncompleteStartup } from '@/types/Startup';
-import { useAuth } from '@/context/AuthContext';
 import StartupsProvider, { useStartups } from '@/context/StartupsContext';
-import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 import '@/fontawesome';
 
@@ -26,10 +24,7 @@ export default function StartupEditor() {
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
   const [isGeneratingTags, setIsGeneratingTags] = useState(false)
 
-  const { user, userDataObj, loading } = useAuth();
   const { postStartup } = useStartups();
-
-  const router = useRouter();
 
   const updateDescriptionLineByLine = async (content: string) => {
     const lines = content.split('\n');
@@ -76,7 +71,7 @@ export default function StartupEditor() {
   };
 
   async function sendPost() {
-    let incompleteStartup: IncompleteStartup = {
+    const incompleteStartup: IncompleteStartup = {
       name: title,
       description: description,
       images: images.map((image) => image.file),
