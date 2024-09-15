@@ -6,7 +6,7 @@ import React from 'react'
 export default function page() {
   return (
     <div className='flex items-center justify-center'>
-        <Tabs defaultValue="account" className="w-[400px]">
+        <Tabs defaultValue="login" className="w-[400px]">
         <TabsList className='w-full'>
             <TabsTrigger value="login" className='w-full'>Login</TabsTrigger>
             <TabsTrigger value="register" className='w-full'>Register</TabsTrigger>

@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useStartups } from '@/context/StartupsContext';
 import { ProcessedStartup } from '@/types/Startup';
 import { LoadingAnimation } from './ui/loading-animation';
+import { Button } from './ui/button';
 
 export default function StartupView({ params }: { params: { uid: string } }) {
   const [startup, setStartup] = useState<ProcessedStartup | null>(null);
@@ -114,6 +115,11 @@ export default function StartupView({ params }: { params: { uid: string } }) {
                     {progress}%
                   </div>
                 </div>
+              </div>
+              <div className='flex flex-row w-full justify-center items-center align-middle mt-2'>
+                  <Button className='hover:opacity-70'>
+                    <a href="/funding">🎉 Fund</a>
+                  </Button>
               </div>
             </CardContent>
           </Card>
