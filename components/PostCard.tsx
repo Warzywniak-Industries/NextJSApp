@@ -1,17 +1,13 @@
 "use client";
 
 import React from "react";
-import { ProcessedStartup, Startup, Weights } from "@/types/Startup";
+import { ProcessedStartup, Startup } from "@/types/Startup";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import "../fontawesome";
-import { useRouter } from "next/navigation";
-
-import { useAuth } from "@/context/AuthContext";
 
 interface PostCardProps {
     classname?: string;
@@ -20,8 +16,6 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-    const { userDataObj, setUserDataObj } = useAuth()
-
     if (!props.post || props.post == null) {
         return (
             <Card className={`${props.classname} max-w-[350px]`}>
@@ -39,25 +33,12 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         );
     }
 
-    function Click()
-    {
-        const router = useRouter();
-
-        if (!props.post)
-        {
-            return
-        }
-        
-
-        router.push(props.post.uid ? `/posts/${props.post.uid}` : "");
-    }
-
     const backgroundStyle = props.post.logo
         ? { backgroundImage: `url(${props.post.logo})`, backgroundSize: "cover", backgroundPosition: "center" }
         : {};
 
     return (
-        <Link href={props.post.uid ? `/posts/${props.post.uid}` : ""}>
+        <a href={props.post.uid ? `/posts/${props.post.uid}` : ""}>
         <Card className={`${props.classname} relative group h-full`} style={backgroundStyle}>
             <div className={`${props.post.logo ? "bg-black bg-opacity-50 group-hover:bg-opacity-90 p-4 transition duration-300 ease-in-out h-48" : ""} w-full h-full flex flex-col justify-between rounded-xl`}>
 
@@ -76,7 +57,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 </div>
             </div>
         </Card>
-        </Link>
+        </a>
     );
 };
 
