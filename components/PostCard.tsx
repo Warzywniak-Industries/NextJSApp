@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState} from "react";
-import { Startup } from "@/types/Startup";
+import { ProcessedStartup, Startup } from "@/types/Startup";
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PostCardProps {
     classname?: string;
-    post?: Startup;
+    post?: Startup | ProcessedStartup;
     index?: number;
 }
 

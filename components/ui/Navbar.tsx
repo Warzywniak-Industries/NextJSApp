@@ -3,10 +3,9 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { ImageSpacer2 } from "@/img";
+import Avatar from "boring-avatars";
 
 const Navbar: React.FC = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-
     const { user, userDataObj } = useAuth()
 
     const UserLogged = () => {

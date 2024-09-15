@@ -28,6 +28,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   fetchUserStartups: (userDataObj: UserData) => Promise<any>;
   startupIds: string[];
+  waitForAuth: () => Promise<void>;
   loading: boolean;
 }
 
@@ -41,6 +42,7 @@ const defaultAuthContext: AuthContextType = {
   logout: async () => {},
   fetchUserStartups: async () => [],
   startupIds: [],
+  waitForAuth: async () => {},
   loading: false,
 };
 
@@ -56,7 +58,7 @@ export function AuthProvider(props: { children: any }) {
   const [userDataObj, setUserDataObj] = useState<UserData | null>(null);
   const [userEventTypes, setUserEventTypes] = useState<Record<string, any>>({});
   const [startupIds, setStartupIds] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
 
   // AUTH HAN
@@ -119,6 +121,17 @@ export function AuthProvider(props: { children: any }) {
     });
   }
 
+  async function waitForAuth(): Promise<void> {
+    await new Promise<void>((resolve) => {
+        const interval = setInterval(() => {
+          console.log(loading);
+            if (!loading) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 500);
+  })};
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setLoading(true);
@@ -138,16 +151,17 @@ export function AuthProvider(props: { children: any }) {
           }
         } catch (err: any) {
           console.log('Error fetching user data:', err.message);
+        } finally {
+          setLoading(false);
         }
       } else {
         setUserDataObj(null);
       }
-  
       setLoading(false);
     });
   
     return unsubscribe;
-  }, []);
+  }, [user]);
   
   useEffect(() => {
     if (user && userDataObj) {
@@ -173,6 +187,7 @@ export function AuthProvider(props: { children: any }) {
     logout,
     fetchUserStartups,
     startupIds,
+    waitForAuth,
     loading
   }
   return (

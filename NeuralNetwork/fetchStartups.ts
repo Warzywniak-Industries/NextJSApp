@@ -28,6 +28,8 @@ export async function fetchStartups(userWeights: Weights): Promise<ProcessedStar
         const startupsSnapshot = await getDocs(startupsCollection);
         const startups: ProcessedStartup[] = startupsSnapshot.docs.map(doc => {
             const data = doc.data() as ProcessedStartup;
+            if (data.weights == null || userWeights ==  null) return data;
+
             data.similarity = cosineSimilarity(userWeights, data.weights, userMagnitude)
             return data
         });

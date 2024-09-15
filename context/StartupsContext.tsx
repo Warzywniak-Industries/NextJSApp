@@ -3,20 +3,20 @@
 import { fetchStartups } from '@/NeuralNetwork/fetchStartups'
 import React from 'react'
 import { useAuth } from './AuthContext'
-import { Startup, Weights, IncompleteStartup } from '@/types/Startup'
+import { Startup, Weights, IncompleteStartup, ProcessedStartup } from '@/types/Startup'
 import { db, storage } from '@/firebase'
 import { collection, CollectionReference, DocumentData, doc, setDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface StartupsContextType {
-  startups: Startup[]
-  getStartups: (tolerance: number) => Promise<void>
+  startups: ProcessedStartup[]
+  getStartups: (tolerance: number) => Promise<ProcessedStartup[]>
   postStartup: (startup: IncompleteStartup) => Promise<any>
 }
 
 const defaultStartupsContext: StartupsContextType = {
   startups: [],
-  getStartups: async () => {},
+  getStartups: async () => [],
   postStartup: async () => {},
 }
 
@@ -41,22 +41,22 @@ export function useStartups() {
 };
 
 export default function StartupsProvider(props: { children: any }) {
-  const [startups, setStartups] = React.useState<Startup[]>([])
+  const [startups, setStartups] = React.useState<ProcessedStartup[]>([])
 
   const { user, userDataObj } = useAuth()
 
 // Call the function to populate the startups in Firestore
-  async function getStartups(tolerance: number) {
+  async function getStartups(tolerance: number): Promise<ProcessedStartup[]> {
     if (!userDataObj) {
-      return
+      return [];
     }
     // Fetch startups from database
     const data = await fetchStartups(userDataObj.prefereces || defaultPrefereces)
 
     console.log(data)
 
-
-    //setStartups(data)
+    setStartups(data)
+    return data;
   }
   async function postStartup(startup: IncompleteStartup) {
     console.log("TEST")
@@ -66,6 +66,22 @@ export default function StartupsProvider(props: { children: any }) {
           .trim() // Remove leading and trailing whitespace
           .replace(/[\s\W-]+/g, '-') // Replace spaces and non-word characters with hyphens
           .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
+    }
+    function generateWeights(tags: string[]): Weights {
+      let weights = {
+        technology: 1,
+        finances: 1,
+        philanthropy: 1,
+        mobility: 1,
+        logistics: 1,
+        health: 1,
+        education: 1,
+        entertainment: 1,
+        environment: 1,
+        security: 1
+      }
+
+      return weights
     }
     async function uploadImage(file: File, uid: string): Promise<string> {
       // Check if the file is provided
@@ -95,6 +111,7 @@ export default function StartupsProvider(props: { children: any }) {
       tags: startup.tags,
       website: startup.website,
       followers: startup.followers,
+      weights: generateWeights(startup.tags)
     }
 
     // Generate unique ID for the startup
@@ -131,8 +148,6 @@ export default function StartupsProvider(props: { children: any }) {
       }
     });
   }
-
-  getStartups(0.1);
 
   const value: StartupsContextType = {
     startups,
