@@ -24,7 +24,7 @@ interface GoalEditorProps {
 const iconOptions = ["car", "plane", "home", "briefcase", "book"]
 
 export function GoalEditor(props: GoalEditorProps) {
-    const [newGoal, setNewGoal] = useState<Omit<Goal, 'id'>>({ title: '', price: 0, icon: 'car', rewards: [] })
+    const [newGoal, setNewGoal] = useState<Omit<Goal, 'id'>>({ title: '', price: 1, icon: 'car', rewards: [] })
     const [editingId, setEditingId] = useState<number | null>(null)
     const [newReward, setNewReward] = useState('')
 
@@ -46,7 +46,7 @@ export function GoalEditor(props: GoalEditorProps) {
     const handleUpdateGoal = () => {
         if (editingId) {
             props.setGoals(props.goals.map(goal => goal.id === editingId ? { ...newGoal, id: editingId } : goal))
-            setNewGoal({ title: '', price: 0, icon: 'car', rewards: [] })
+            setNewGoal({ title: '', price: 1, icon: 'car', rewards: [] })
             setEditingId(null)
         }
     }
@@ -98,7 +98,7 @@ export function GoalEditor(props: GoalEditorProps) {
                                 type="number"
                                 placeholder="Price"
                                 value={newGoal.price}
-                                onChange={(e) => setNewGoal({ ...newGoal, price: Number(e.target.value) })}
+                                onChange={(e) => setNewGoal({ ...newGoal, price: Number(e.target.value) > 1 ? Number(e.target.value) : 1 })}
                             />
                             <Select
                                 value={newGoal.icon}
