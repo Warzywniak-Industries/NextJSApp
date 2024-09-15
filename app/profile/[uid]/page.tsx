@@ -14,7 +14,7 @@ export default function Page({ params }: { params: { uid: string } }) {
     // Implement infinite scroll
     return (
         <div>
-            <ProfileForUser uid={params.uid}/>
+            <ProfileForUser/>
         </div>
     );
 };
