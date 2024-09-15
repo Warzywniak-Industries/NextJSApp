@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,10 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
       <body
-        className="antialiased"
+        className="flex flex-col w-full min-h-[100vh] antialiased gap-y-8"
       >
         <Navbar />
         {children}
+        <Toaster />
         <Footer />
       </body>
       </AuthProvider>

@@ -1,8 +1,15 @@
 "use client";
 
+
+
+
+import HeroBanner from "@/components/HeroBanner";
+import LadingPageTimeline from "@/components/Timeline";
+import PostCarousel from "@/components/PostCarousel";
 import { db } from "@/firebase";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
+
 export default function Home() {
 
 
@@ -41,8 +48,10 @@ async function testFirestoreConnection() {
 testFirestoreConnection();
 
   return (
-    <div className="">
-      elo
+    <div className="flex flex-col gap-y-6 overflow-x-hidden w-full">
+      <HeroBanner/>
+      <LadingPageTimeline/>
+      <PostCarousel/>
     </div>
   );
 }

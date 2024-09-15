@@ -6,13 +6,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { auth, db } from '@/firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
+import { Weights } from './StartupsContext'
+import { pre } from 'framer-motion/client'
 
 interface UserData {
   email: string;
   firstName: string;
   lastName: string;
   uid: string;
-  accType: "StartupOwner" | "Company" | "Admin"
+  accType: "StartupOwner" | "Company" | "Admin";
+  prefereces: Weights;
 }
 
 interface AuthContextType {
@@ -55,17 +58,34 @@ export function AuthProvider(props: { children: any }) {
   function signup(email: string, password: string, firstName: string, lastName: string) {
     let uid = '';
     return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
         const docRef = doc(db, 'users', user.uid);
-  
-        uid = user.uid;
-        return setDoc(docRef, {
+
+        // Set user data in Firestore
+        await setDoc(docRef, {
           email,
           firstName,
           lastName,
           uid: user.uid,
+          accType: "StartupOwner", 
+          prefereces: {
+            technology: 0,
+            finances: 0,
+            philanthropy: 0,
+            mobility: 0,
+            logistics: 0,
+            health: 0,
+            education: 0,
+            entertainment: 0,
+            environment: 0,
+            security: 0,
+          }
         });
+        console.log('User data successfully updated');
+      })
+      .catch((error) => {
+        console.log('Error creating user:', error.code, error.message);
       });
   }
 
@@ -83,53 +103,48 @@ export function AuthProvider(props: { children: any }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      try {
-        setLoading(true);
-        setUser(user);
-        if (!user) {
-          console.log('User is not logged in');
-          return;
-        }
+      setLoading(true);
+      setUser(user);
   
-        // if user is logged in, get user data from Firestore
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-        let firebaseData = {};
-        if (docSnap.exists()) {
-          console.log('Found user data:');
-          const data = docSnap.data();
+      if (user) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+  
+          if (docSnap.exists()) {
+            console.log('Found user data:', docSnap.data());
+            setUserDataObj(docSnap.data() as UserData);
+          } else {
+            console.log('No user data found');
+            setUserDataObj(null); // Handle case when no data is found
+          }
+        } catch (err: any) {
+          console.log('Error fetching user data:', err.message);
         }
-        setUserDataObj(firebaseData as UserData);
-        console.log(userDataObj);
-
-        setUserEventTypes(userEventTypes);
-      } catch (err: any) {
-        console.log(err.message);
-      } finally {
-        setLoading(false);
-        console.log('Loading done');
-        console.log(userDataObj);
+      } else {
+        setUserDataObj(null);
       }
+  
+      setLoading(false);
     });
+  
     return unsubscribe;
   }, []);
-
+  
   useEffect(() => {
-    console.log('User data changed:', userDataObj);
-    const fetchUserData = async () => {
-      try {
-        if (!user) {
-          return
+    if (user && userDataObj) {
+      const fetchUserData = async () => {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          await setDoc(docRef, userDataObj, { merge: true }); // Use { merge: true } to update only the fields specified
+        } catch (err: any) {
+          console.log('Error updating user data:', err.message);
         }
-        const docRef = doc(db, 'users', user.uid)
-        setDoc(docRef, userDataObj)
-      }
-      catch (err: any) {
-        console.log(err.message)
-      }
+      };
+  
+      fetchUserData();
     }
-    fetchUserData()
-  }, [userDataObj])
+  }, [user, userDataObj]);
   const value: AuthContextType = {
     user,
     userDataObj,

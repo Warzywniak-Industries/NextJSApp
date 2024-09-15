@@ -1,20 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { NavLinks } from "@/constants/Navigation";
+import { Menu, Close } from "@/img";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar: React.FC = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const { user } = useAuth()
+
     return (
-        <nav className="flex flex-row justify-between w-full px-8 md:px-[11.25%] py-4">
-            <p className="semiboldheader3">StartupHUB</p>
-            <div className="flex flex-row gap-x-2">
-                {NavLinks.map((link, index) => (
-                    <Link key={index} href={link.path} className="semiboldheader4 cursor-pointer opacity-70 hover:opacity-100">
-                        {link.label}
-                    </Link>
-                ))}
+        <nav className="w-full py-4 bg-[#96c1e9]/30 shadow-text drop-shadow-lg items-center">
+            <div className="flex justify-between w-[80%] mx-auto items-center">
+                <div className="flex gap-6 items-center">
+                    <a href="/" className="mr-4 font-extrabold text-xl">StartupHub</a>
+                </div>
+                <div className="flex gap-6 items-center">
+                    <a href="/login" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
+                        <h1>START A CAMPAIGN</h1>
+                    </a>
+                    <a href="/login"  className="font-extralight">Login / Sign Up</a>
+                </div>
             </div>
         </nav>
     );
