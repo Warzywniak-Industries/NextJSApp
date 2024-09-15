@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Progress } from '@/components/ui/progress';
@@ -11,15 +11,45 @@ import { Gallery } from "@/components/post/gallery"
 import '@/fontawesome';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { useStartups } from '@/context/StartupsContext';
+import { ProcessedStartup } from '@/types/Startup';
 
-export default function PostEditor() {
-  const title = "Hamburger Lover"
-  const description = "<h1>Hamburger Lovers: Your One-Stop Shop for Burger Bliss</h1><h2>Bringing the World's Best Burgers to Your Doorstep</h2><p>Are you a die-hard hamburger enthusiast? Do you crave juicy patties, perfectly toasted buns, and mouthwatering toppings?</p><p>Look no further than Hamburger Lovers! We're an innovative startup dedicated to connecting burger lovers like you with the most delicious and diverse burger offerings in your city.</p><h3>What We Offer:</h3><ul><li><strong>Curated Burger Selection:</strong> We partner with top-rated burger joints, hidden gems, and artisanal burger chefs to bring you a curated menu of the best burgers in town.</li><li><strong>Convenient Ordering:</strong> Our user-friendly platform allows you to browse menus, customize your burgers, and place orders with just a few taps.</li><li><strong>Fast and Reliable Delivery:</strong> We work with trusted delivery partners to ensure your burger arrives hot, fresh, and on time.</li><li><strong>Exclusive Deals and Promotions:</strong> Get access to exclusive discounts, loyalty programs, and special offers on your favorite burgers.</li></ul><h3>Join the Hamburger Lovers Community:</h3><p>We're more than just a delivery service - we're a community of passionate burger lovers. Follow us on social media for burger news, reviews, and drool-worthy photos.</p><h3>Ready to Bite into the Best?</h3><p>Download the Hamburger Lovers app today and start exploring a world of burger deliciousness!</p>";
+export default function PostEditor({ params }: { params: { uid: string } }) {
+  const [startup, setStartup] = useState<ProcessedStartup | null>(null);
+  const { uid } = params;
+  const { getStartupByUid } = useStartups();
+
+  useEffect(() => {
+    const fetchStartup = async () => {
+      try {
+        const startup = await getStartupByUid(uid);
+        setStartup(startup);
+        console.log("xdddd",startup);
+        return startup;
+      } catch (error) {
+        console.error("An error occured when fetching post by uid!", error);
+    } finally {
+      console.log("No startup found");
+    }
+    }
+    if(!uid){
+      console.log("No uid found");
+    }
+    else{
+      fetchStartup();
+    }
+  }, [startup]);
+
+  if(!startup) return <div>Loading....</div>;
+
+  const title = startup.name;
+  const description = startup.description;
+  const images = [startup.logo, ... startup.thumbails as string[]];
+  const tags = startup.tags;
+
   const target = 5000;
   const raised = 3270.34;
   const progress = Math.round(raised / target * 1000) / 10;
-  const images = Array<string>('/img/Kacper.png', '/img/Wojciech.png', '/img/Artur.png', '/img/Wojciech.png');
-  const tags = Array<string>('Pizza', 'Food', 'Shop');
   const goals = Array<Goal>(
     { id: 1, title: 'Start', price: 500, icon: "a", rewards: ["we may not drop this", "we can eat food"] },
     { id: 2, title: 'Mid', price: 2000, icon: "a", rewards: ["there is a chance we will succeed", "we will spend all the money stupidly"] },
@@ -48,7 +78,7 @@ export default function PostEditor() {
           <Card className="space-y-2 shadow-md bg-white">
             <CardContent>
               <div className='space-y-2 mt-4'>
-                <div className='relative starter-desc' dangerouslySetInnerHTML={{ __html: description }}>
+                <div className='relative' dangerouslySetInnerHTML={{ __html: description }}>
                 </div>
               </div>
             </CardContent>
@@ -71,15 +101,12 @@ export default function PostEditor() {
                 <Label htmlFor="price">Target Funding: <Badge>{formatPrice(raised)}</Badge> / <Badge>{formatPrice(target, true)}</Badge></Label>
                 <div className="w-full bg-gray-200 rounded-full h-8 shadow-inner">
                   <div
-                    className="flex font-bold items-center justify-center bg-gradient-to-r from-primary to-accent h-8 rounded-full shadow-md animate-pulse"
+                    className="flex font-bold items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 h-8 rounded-full shadow-md animate-pulse"
                     style={{ width: `${progress}%` }}
                   >
                     {progress}%
                   </div>
                 </div>
-              </div>
-              <div className="space-y-2 flex justify-center">
-                <Button className='mt-4 rounded-full px-12'>Donate 🎉</Button>
               </div>
             </CardContent>
           </Card>
@@ -89,7 +116,7 @@ export default function PostEditor() {
                 {raised >= goal.price && (
                   <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-white rounded-md" />
-                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary to-secondary [mask-image:linear-gradient(white,transparent_75%)]" />
+                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-400 to-blue-500 [mask-image:linear-gradient(white,transparent_75%)]" />
                   </div>
                 )}
                 <CardHeader>

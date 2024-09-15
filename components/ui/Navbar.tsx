@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { ImageSpacer2 } from "@/img";
+import Avatar from "boring-avatars";
 
 const Navbar: React.FC = () => {
     const { user, userDataObj } = useAuth()
@@ -11,8 +12,10 @@ const Navbar: React.FC = () => {
         if(!userDataObj) return
         return (
             <div className="flex h-12 items-center">
-                <h1 className="pr-3">Hi {userDataObj.firstName}</h1>
-                
+            <span className="pr-3 text-base whitespace-nowrap">Hi {userDataObj.firstName}</span>
+            <div>
+                <Avatar name={userDataObj.firstName + userDataObj.lastName} size={40} variant="marble"/>
+            </div>
             </div>
         )
         

@@ -5,18 +5,20 @@ import React from 'react'
 import { useAuth } from './AuthContext'
 import { Startup, Weights, IncompleteStartup, ProcessedStartup } from '@/types/Startup'
 import { db, storage } from '@/firebase'
-import { collection, CollectionReference, DocumentData, doc, setDoc } from 'firebase/firestore'
+import { collection, CollectionReference, DocumentData, doc, setDoc, getDocs } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface StartupsContextType {
   startups: ProcessedStartup[]
   getStartups: (tolerance: number) => Promise<ProcessedStartup[]>
+  getStartupByUid: (uid: string) => Promise<any>
   postStartup: (startup: IncompleteStartup) => Promise<any>
 }
 
 const defaultStartupsContext: StartupsContextType = {
   startups: [],
   getStartups: async () => [],
+  getStartupByUid: async () => {},
   postStartup: async () => {},
 }
 
@@ -63,6 +65,26 @@ export default function StartupsProvider(props: { children: any }) {
     setStartups(data)
     return data;
   }
+
+  async function getStartupByUid(uid: string): Promise<any> {
+    console.log("TEST")
+    if (!user) {
+      return console.log("User not logged in");
+    }
+    return getDocs(collection(db, 'startups')).then(
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data().uid)
+          if (doc.data().uid === uid) {
+            return doc.data();
+          }
+        });
+      }).catch((e: Error) => {
+        console.error("An error occured when fetching post by uid!", e);
+      });
+
+  }
+
   async function postStartup(startup: IncompleteStartup) {
     console.log("TEST")
     function generateSlug(title: string): string {
@@ -178,6 +200,7 @@ export default function StartupsProvider(props: { children: any }) {
   const value: StartupsContextType = {
     startups,
     getStartups,
+    getStartupByUid,
     postStartup,
   };
   return (
