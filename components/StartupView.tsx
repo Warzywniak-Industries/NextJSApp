@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import Link from 'next/link';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Goal } from "@/components/editor/goalEditor"
@@ -117,6 +118,11 @@ export default function StartupView({ params }: { params: { uid: string } }) {
                     {progress}%
                   </div>
                 </div>
+              </div>
+              <div className='flex flex-row w-full justify-center items-center align-middle mt-2'>
+                  <Button className='hover:opacity-70'>
+                    <Link href="/funding">🎉 Fund</Link>
+                  </Button>
               </div>
             </CardContent>
           </Card>
