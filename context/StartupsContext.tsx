@@ -82,7 +82,7 @@ export default function StartupsProvider(props: { children: any }) {
   }
 
   async function postStartup(startup: IncompleteStartup) {
-    console.log("TEST")
+    
     function generateSlug(title: string): string {
       return title
           .toLowerCase() // Convert to lowercase
@@ -162,10 +162,10 @@ export default function StartupsProvider(props: { children: any }) {
     new_startup.uid = generateSlug(startup.name);
 
     // Upload images
-    new_startup.logo = await uploadImage(startup.images[0], new_startup.uid);
-    for (let i = 1; i < startup.images.length; i++) {
-      new_startup.thumbails.push(await uploadImage(startup.images[i], new_startup.uid));
-    }
+     new_startup.logo = await uploadImage(startup.images[0], new_startup.uid);
+     for (let i = 1; i < startup.images.length; i++) {
+       new_startup.thumbails.push(await uploadImage(startup.images[i], new_startup.uid));
+     }
 
     setDoc(doc(db, 'startups', new_startup.uid), new_startup)
     .then(() => {
@@ -173,24 +173,7 @@ export default function StartupsProvider(props: { children: any }) {
       const updatedUser = { ...userDataObj };
       updatedUser.startupIds.push(new_startup.uid);
       setDoc(doc(db, 'users', user.uid), updatedUser);
-    })
-    .catch((error) => {
-      // Create a new document if it doesn't exist
-      if (error.code === 'not-found') {
-      setDoc(doc(db, 'startups', new_startup.uid), startup)
-      .then(() => {
-        // Update the user's StartupIds
-        const updatedUser = { ...userDataObj };
-        updatedUser.startupIds.push(new_startup.uid);
-        setDoc(doc(db, 'users', user.uid), updatedUser);
-      })
-      .catch((error) => {
-        console.error('Error creating new document:', error);
-      });
-      } else {
-      console.error('Error updating document:', error);
-      }
-    });
+    }).catch((error) => console.error(error));
   }
 
   const value: StartupsContextType = {
