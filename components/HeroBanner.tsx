@@ -5,7 +5,7 @@ import { HeroCard } from "@/img";
 
 export default function HeroBanner() {
   return (
-    <div className="w-full flex flex-col md:flex-row bg-background self-strech items-center justify-center px-[32px] py-16 gap-y-16 md:px-[11.25%]">
+    <div className="w-full flex flex-col md:flex-row bg-background self-strech items-center justify-center px-[32px] py-16 gap-y-16 md:px-[11.25%] gap-x-6">
         <div>
             <h1 className="boldheader2 md:boldheader1 shrink-0 text-text">
                 Transforming Ideas <br className="visible"/> into <span className="bg-gradient-to-r from-primary to-accent inline-block text-transparent bg-clip-text leading-normal">Reality</span>
