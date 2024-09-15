@@ -11,7 +11,7 @@ import ReactQuill from 'react-quill';
 import { DropZone, UploadedImage } from "@/components/editor/dropZone";
 import { IncompleteStartup } from '@/types/Startup';
 import { useAuth } from '@/context/AuthContext';
-import { useStartups } from '@/context/StartupsContext';
+import StartupsProvider, { useStartups } from '@/context/StartupsContext';
 import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 import '@/fontawesome';
@@ -26,7 +26,7 @@ export default function PostEditor() {
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
   const [isGeneratingTags, setIsGeneratingTags] = useState(false)
 
-  const { user, userDataObj } = useAuth();
+  const { user, userDataObj, loading } = useAuth();
   const { postStartup } = useStartups();
 
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function PostEditor() {
     }
   };
 
-  const generateDescription = async () => {
+  async function generateDescription() {
     setIsGeneratingDescription(true);
     const response = await fetch(`${process.env.NEXT_PUBLIC_OPENAI_URL}`, {
       method: 'POST',
@@ -74,16 +74,7 @@ export default function PostEditor() {
     setIsGeneratingTags(false);
   };
 
-  const sendPost = async () => {
-    const formData = new FormData();
-    images.forEach((image) => {
-      formData.append('images', image.file);
-    });
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('target', target.toString());
-    formData.append('tags', tags.join(','));
-    formData.append('goals', JSON.stringify(goals));
+  async function sendPost() {
 
     let incompleteStartup: IncompleteStartup = {
       name: title,
@@ -93,14 +84,16 @@ export default function PostEditor() {
       website: '', // TODO
       followers: 0
     }
+
     await postStartup(incompleteStartup);
   }
 
   useEffect(() => {
-    if (!user || !userDataObj) router.push('/login');
+    if (!loading && (!user || !userDataObj)) router.push('/login');
   }, [user])
 
   return (
+    <StartupsProvider>
     <div className="w-[80%] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="space-y-4 md:col-span-7">
@@ -133,7 +126,7 @@ export default function PostEditor() {
                     size="sm"
                     className="ms-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 px-4 shadow-lg hover:shadow-md transition-all duration-300 hover:from-purple-600 hover:to-pink-600"
                     disabled={title && !isGeneratingDescription && !isGeneratingTags ? false : true}
-                    onClick={generateDescription}
+                    onClick={() => generateDescription()}
                   >{isGeneratingDescription ? '✨ Making magic...' : '✨ Generate with AI'}</Button>
                 </Label>
                 <div className='relative'>
@@ -153,7 +146,7 @@ export default function PostEditor() {
         <div className="space-y-4 md:col-span-5">
           <Card className="shadow-md bg-white">
             <CardHeader>
-              <CardTitle className='flex items-center'>New Startup <Button className='ms-auto' onClick={sendPost}>Create</Button></CardTitle>
+              <CardTitle className='flex items-center'>New Startup <Button className='ms-auto' onClick={() => sendPost()}>Create</Button></CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 mt-4">
@@ -176,7 +169,7 @@ export default function PostEditor() {
                   size="sm"
                   className="ms-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 px-4 shadow-lg hover:shadow-md transition-all duration-300 hover:from-purple-600 hover:to-pink-600"
                   disabled={title && description.length > 50 && !isGeneratingTags && !isGeneratingDescription ? false : true}
-                  onClick={generateTags}
+                  onClick={() => generateTags()}
                 >{isGeneratingTags ? '✨ Making magic...' : '✨ Sugest Tags'}</Button></Label>
                 <TagSelector tags={tags} setTags={setTags} />
               </div>
@@ -188,5 +181,6 @@ export default function PostEditor() {
         </div>
       </div>
     </div>
+    </StartupsProvider>
   )
 }

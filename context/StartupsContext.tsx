@@ -1,3 +1,5 @@
+'use client'
+
 import { fetchStartups } from '@/NeuralNetwork/fetchStartups'
 import React from 'react'
 import { useAuth } from './AuthContext'
@@ -57,6 +59,7 @@ export default function StartupsProvider(props: { children: any }) {
     //setStartups(data)
   }
   async function postStartup(startup: IncompleteStartup) {
+    console.log("TEST")
     function generateSlug(title: string): string {
       return title
           .toLowerCase() // Convert to lowercase
@@ -130,8 +133,14 @@ export default function StartupsProvider(props: { children: any }) {
   }
 
   getStartups(0.1);
+
+  const value: StartupsContextType = {
+    startups,
+    getStartups,
+    postStartup,
+  };
   return (
-    <StartupsContext.Provider value={defaultStartupsContext}>
+    <StartupsContext.Provider value={value}>
       {props.children}
     </StartupsContext.Provider>
   )
