@@ -12,13 +12,43 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { db } from "@/firebase";
+import { Startup } from "@/context/StartupsContext";
+import { PostOverview } from "@/types/Post";
 
 export default function PostCarousel() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<PostOverview[]>([]);
+
+    const startupsCollection = collection(db, 'startups') 
+    
+    const getPosts = async () => {
+        try {
+            // Fetch data from Firestore
+            const q = query(startupsCollection, orderBy("followers"), limit(6));
+            const response = await getDocs(q); // Execute the query
+            
+            const data = response.docs.map((doc) => doc.data() as Startup).map((item) => {
+                const post: PostOverview = {
+                    title: item.name || "Untitled",  // Fallback for missing fields
+                    description: item.description || "No description available",
+                    followers: item.followers || 0,  // Fallback if followers is missing
+                    slug: "",
+                    state: "Draft",
+                    thumbnail: ""
+                };
+                return post;
+            });
+            
+            // Set the fetched posts in state
+            setPosts(data);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
+    };
 
     useEffect(() => {
-        // Fetch posts from API
-        console.log(posts);
+        getPosts();
     }, []);
 
     return (
