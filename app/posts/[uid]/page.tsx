@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Progress } from '@/components/ui/progress';
@@ -11,16 +11,26 @@ import { Gallery } from "@/components/post/gallery"
 import '@/fontawesome';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { useRouter } from 'next/router'
+import { useStartups } from '@/context/StartupsContext';
+import { ProcessedStartup } from '@/types/Startup';
 
-export default function PostEditor() {
-  const title = "Hamburger Lover"
-  const description = "<h1>Hamburger Lovers: Your One-Stop Shop for Burger Bliss</h1><h2>Bringing the World's Best Burgers to Your Doorstep</h2><p>Are you a die-hard hamburger enthusiast? Do you crave juicy patties, perfectly toasted buns, and mouthwatering toppings?</p><p>Look no further than Hamburger Lovers! We're an innovative startup dedicated to connecting burger lovers like you with the most delicious and diverse burger offerings in your city.</p><h3>What We Offer:</h3><ul><li><strong>Curated Burger Selection:</strong> We partner with top-rated burger joints, hidden gems, and artisanal burger chefs to bring you a curated menu of the best burgers in town.</li><li><strong>Convenient Ordering:</strong> Our user-friendly platform allows you to browse menus, customize your burgers, and place orders with just a few taps.</li><li><strong>Fast and Reliable Delivery:</strong> We work with trusted delivery partners to ensure your burger arrives hot, fresh, and on time.</li><li><strong>Exclusive Deals and Promotions:</strong> Get access to exclusive discounts, loyalty programs, and special offers on your favorite burgers.</li></ul><h3>Join the Hamburger Lovers Community:</h3><p>We're more than just a delivery service - we're a community of passionate burger lovers. Follow us on social media for burger news, reviews, and drool-worthy photos.</p><h3>Ready to Bite into the Best?</h3><p>Download the Hamburger Lovers app today and start exploring a world of burger deliciousness!</p>";
+export default async function PostEditor() {
+  const router = useRouter();
+  const { uid } = router.query;
+  const { getStartupByUid } = useStartups();
+
+  if (!uid) return console.log("Post uid not found");
+  const startup = await getStartupByUid(uid as string) as ProcessedStartup;
+  
+  const title = startup.name;
+  const description = startup.description;
+  const images = [startup.logo, ... startup.thumbails as string[]];
+  const tags = startup.tags;
+
   const target = 5000;
   const raised = 3270.34;
-  const progress = Math.round(raised / target * 1000) / 10;
-  const images = Array<string>('/img/Kacper.png', '/img/Wojciech.png', '/img/Artur.png', '/img/Wojciech.png');
-  const tags = Array<string>('Pizza', 'Food', 'Shop');
-  const goals = Array<Goal>(
+  const progress = Math.round(raised / target * 1000) / 10; const goals = Array<Goal>(
     { id: 1, title: 'Start', price: 500, icon: "a", rewards: ["we may not drop this", "we can eat food"] },
     { id: 2, title: 'Mid', price: 2000, icon: "a", rewards: ["there is a chance we will succeed", "we will spend all the money stupidly"] },
     { id: 3, title: 'End game :O', price: 4000, icon: "a", rewards: ["we will succeed", "we spent all the money stupidly"] }
