@@ -20,6 +20,7 @@ export interface Startup {
   thumbails: string[]
   website: string
   followers: number
+  weights: Weights
 }
 
 export interface ProcessedStartup extends Startup
