@@ -16,6 +16,7 @@ import { ProcessedStartup } from '@/types/Startup';
 
 export default function StartupView({ params }: { params: { uid: string } }) {
   const [startup, setStartup] = useState<ProcessedStartup | null>(null);
+  const [noThumbnail, setNoThumbnail] = useState<boolean>(false);
   const { uid } = params;
   const { getStartupByUid } = useStartups();
 
@@ -37,15 +38,23 @@ export default function StartupView({ params }: { params: { uid: string } }) {
     }
     else{
       fetchStartup();
+      if(startup){
+        if (!startup.logo) {
+          startup.logo = ""
+          setNoThumbnail(true);
+        }
+        if (!startup.thumbails) startup.thumbails = [];
+        if (!startup.tags) startup.tags = [];
+      }
     }
   }, [startup]);
 
   if(!startup) return <div>Loading....</div>;
 
-  const title = startup.name;
-  const description = startup.description;
   const images = [startup.logo, ... startup.thumbails as string[]];
   const tags = startup.tags;
+  const title = startup.name;
+  const description = startup.description;
 
   const target = 5000;
   const raised = 3270.34;
@@ -69,7 +78,7 @@ export default function StartupView({ params }: { params: { uid: string } }) {
   return (
     <div className="w-[80%] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <div className="space-y-4 md:col-span-7">
+        <div className={`space-y-4 md:col-span-7 ${noThumbnail? "hidden" : "visible"}`}>
           <Card className='shadow-md bg-white'>
             <CardContent className='p-6'>
               <Gallery images={images} />
