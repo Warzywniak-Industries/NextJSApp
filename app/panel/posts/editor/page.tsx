@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from 'react'
-import { Input } from "@/components/ui/input"
-import { TagSelector } from "@/components/editor/tagSelector"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect, useState } from 'react';
+import { Input } from "@/components/ui/input";
+import { TagSelector } from "@/components/editor/tagSelector";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GoalEditor, Goal } from "@/components/editor/goalEditor"
 import ReactQuill from 'react-quill';
-import { DropZone, UploadedImage } from "@/components/editor/dropZone"
+import { DropZone, UploadedImage } from "@/components/editor/dropZone";
+import { IncompleteStartup } from '@/types/Startup';
+import { useAuth } from '@/context/AuthContext';
+import { useStartups } from '@/context/StartupsContext';
+import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 import '@/fontawesome';
 
@@ -22,6 +26,10 @@ export default function PostEditor() {
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
   const [isGeneratingTags, setIsGeneratingTags] = useState(false)
 
+  const { user, userDataObj } = useAuth();
+  const { postStartup } = useStartups();
+
+  const router = useRouter();
 
   const updateDescriptionLineByLine = async (content: string) => {
     const lines = content.split('\n');
@@ -76,18 +84,21 @@ export default function PostEditor() {
     formData.append('target', target);
     formData.append('tags', tags.join(','));
     formData.append('goals', JSON.stringify(goals));
-    console.log('formData', formData);
-    return;
-    const response = await fetch('/api/posts', {
-      method: 'POST',
-      body: formData,
-    });
-    if (response.ok) {
-      alert('Post created successfully');
-    } else {
-      alert('An error occurred while creating the post');
+
+    let incompleteStartup: IncompleteStartup = {
+      name: title,
+      description: description,
+      images: images.map((image) => image.file),
+      tags: tags,
+      website: '', // TODO
+      followers: 0
     }
+    await postStartup(incompleteStartup);
   }
+
+  useEffect(() => {
+    if (!user || !userDataObj) router.push('/login');
+  }, [user])
 
   return (
     <div className="w-[80%] mx-auto">
@@ -116,7 +127,6 @@ export default function PostEditor() {
                 />
               </div>
               <div className='space-y-2 mt-4'>
-
                 <Label htmlFor="description">
                   Description
                   <Button

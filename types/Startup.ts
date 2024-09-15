@@ -18,6 +18,7 @@ export interface Startup {
   description: string
   logo: string
   thumbails: string[]
+  tags: string[]
   website: string
   followers: number
 }
@@ -30,8 +31,8 @@ export interface ProcessedStartup extends Startup
 export interface IncompleteStartup {
   name: string
   description: string
-  logo: File
-  thumbails: File[]
+  images: File[]
+  tags: string[]
   website: string
   followers: number
 }
