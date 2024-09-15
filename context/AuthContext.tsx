@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { Startup, Weights } from '@/types/Startup'
 
-interface UserData {
+export interface UserData {
   email: string;
   firstName: string;
   lastName: string;
