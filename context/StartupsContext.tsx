@@ -118,7 +118,11 @@ export default function StartupsProvider(props: { children: any }) {
       tags: startup.tags,
       website: startup.website,
       followers: startup.followers,
-      weights: generateWeights(startup.tags)
+      weights: generateWeights(startup.tags),
+      target: 0,
+      raised: 0,
+      authors: [],
+      goals: []
     }
 
     // Generate unique ID for the startup

@@ -11,7 +11,13 @@ export interface Weights
     environment: number
     security: number
 }
-
+export interface StartupGoal
+{
+  uid: string
+  title: string
+  raised: string
+  rewards: string[]
+}
 export interface Startup {
   uid: string
   name: string
@@ -24,6 +30,10 @@ export interface Startup {
   website: string
   followers: number
   weights?: Weights
+  target: number
+  raised: number
+  authors: string[]
+  goals: StartupGoal[]
 }
 
 export interface ProcessedStartup extends Startup
