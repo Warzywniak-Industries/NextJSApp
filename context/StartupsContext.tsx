@@ -103,7 +103,7 @@ export default function StartupsProvider(props: { children: any }) {
       new_startup.thumbails.push(await uploadImage(startup.images[i], new_startup.uid));
     }
 
-    setDoc(doc(db, 'startups', new_startup.uid), startup)
+    setDoc(doc(db, 'startups', new_startup.uid), new_startup)
     .then(() => {
       // Update the user's StartupIds
       const updatedUser = { ...userDataObj };

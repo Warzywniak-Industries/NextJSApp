@@ -19,7 +19,7 @@ import '@/fontawesome';
 export default function PostEditor() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState<string>('');
-  const [target, setTarget] = useState(1)
+  const [target, setTarget] = useState('')
   const [images, setImages] = useState<UploadedImage[]>([])
   const [tags, setTags] = useState<string[]>([])
   const [goals, setGoals] = useState<Goal[]>([])
@@ -81,7 +81,7 @@ export default function PostEditor() {
     });
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('target', target.toString());
+    formData.append('target', target);
     formData.append('tags', tags.join(','));
     formData.append('goals', JSON.stringify(goals));
 
@@ -163,12 +163,7 @@ export default function PostEditor() {
                   type="number"
                   placeholder="Enter target funding"
                   value={target}
-                  onChange={(e) => {
-                    const value = Number(e.target.value.replace(/\D/g, ''));
-                    if(value >= 1) {
-                      setTarget(value);
-                    }
-                  }}
+                  onChange={(e) => setTarget(e.target.value)}
                 />
               </div>
               <div className="space-y-2 mt-4">
