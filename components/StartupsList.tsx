@@ -32,7 +32,7 @@ export default function StartupsList() {
     <div className="flex flex-col gap-y-4 px-8 md:px-[11.25%]">
         <div className="flex flex-row justify-between items-center">
             <h2 className="text-text semiboldheader2">Browse startups</h2>
-            <p className="boldbasetext brightness-60 bg-primary inline-block text-transparent bg-clip-text">Find popular startups matching your interests</p>
+            <p className="boldbasetext brightness-50 bg-primary inline-block text-transparent bg-clip-text">Find popular startups matching your interests</p>
         </div>
         <div className="flex flex-wrap w-full mx-6 gap-6">
             {startups.map((startup, index) => (
