@@ -38,37 +38,6 @@ export default function Page() {
 
     return (
         <div className="p-4">
-            <div className="mb-4">
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                    Title
-                </label>
-                <input
-                    type="text"
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-            </div>
-            <div className="mb-4">
-                <button
-                    onClick={handleUpdateDescription}
-                    className="px-4 py-2 bg-indigo-500 text-white rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                    Generate Description
-                </button>
-            </div>
-            <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                    Description
-                </label>
-                <textarea
-                    id="description"
-                    value={description}
-                    readOnly
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-            </div>
         </div>
     );
 };

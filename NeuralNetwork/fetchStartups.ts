@@ -1,5 +1,6 @@
-import { Weights, WeightedStartup } from "@/context/StartupsContext";
+
 import { db } from "@/firebase";
+import { ProcessedStartup, Startup, Weights } from "@/types/Startup";
 import { collection, getDocs, CollectionReference, DocumentData, query, where, getDoc } from "firebase/firestore";
 
 function dotProduct(A: Weights, B: Weights): number {
@@ -19,44 +20,16 @@ function cosineSimilarity(A: Weights, B: Weights, userMagnitude: number): number
 }
 
 
-export async function fetchStartups(userWeights: Weights): Promise<WeightedStartup[]> {
+export async function fetchStartups(userWeights: Weights): Promise<ProcessedStartup[]> {
     const startupsCollection = collection(db, 'weightedStartups') as CollectionReference<DocumentData>;
     const userMagnitude = magnitude(userWeights);
 
     try {
         const startupsSnapshot = await getDocs(startupsCollection);
-        const startups: WeightedStartup[] = startupsSnapshot.docs.map(doc => {
-            const data = doc.data() as Weights;
-            
-            const startupWeights: Weights = {
-                technology: data.technology ?? 0,
-                finances: data.finances ?? 0,
-                philanthropy: data.philanthropy ?? 0,
-                mobility: data.mobility ?? 0,
-                logistics: data.logistics ?? 0,
-                health: data.health ?? 0,
-                education: data.education ?? 0,
-                entertainment: data.entertainment ?? 0,
-                environment: data.environment ?? 0,
-                security: data.security ?? 0,
-            };
-        
-            return {
-                name: "", // Add the missing properties
-                technology: startupWeights.technology,
-                finances: startupWeights.finances,
-                philanthropy: startupWeights.philanthropy,
-                mobility: startupWeights.mobility,
-                logistics: startupWeights.logistics,
-                health: startupWeights.health,
-                education: startupWeights.education,
-                entertainment: startupWeights.entertainment,
-                environment: startupWeights.environment,
-                security: startupWeights.security,
-                uid: doc.id,
-                weights: startupWeights,
-                similarity: cosineSimilarity(userWeights, startupWeights, userMagnitude)
-            };
+        const startups: ProcessedStartup[] = startupsSnapshot.docs.map(doc => {
+            const data = doc.data() as ProcessedStartup;
+            data.similarity = cosineSimilarity(userWeights, data.weights, userMagnitude)
+            return data
         });
 
         // Sort startups by similarity in descending order

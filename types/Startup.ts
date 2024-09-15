@@ -21,6 +21,7 @@ export interface Startup {
   tags: string[]
   website: string
   followers: number
+  weights: Weights
 }
 
 export interface ProcessedStartup extends Startup
