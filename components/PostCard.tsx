@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState} from "react";
+import React from "react";
 import { ProcessedStartup, Startup } from "@/types/Startup";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -17,7 +17,7 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-    if (!props.post || props.post == null){
+    if (!props.post || props.post == null) {
         return (
             <Card className={`${props.classname} max-w-[350px]`}>
                 <CardHeader >
@@ -32,21 +32,29 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 </CardFooter>
             </Card>
         );
-    };
+    }
+
+    const backgroundStyle = props.post.logo
+        ? { backgroundImage: `url(${props.post.logo})`, backgroundSize: "cover", backgroundPosition: "center" }
+        : {};
 
     return (
-        <Card className={props.classname}>
-            <CardHeader>
-                <img src={props.post.logo}/>
-                <Link href={props.post.uid? `/posts/${props.post.uid}` : ""}><CardTitle>{props.post.name}</CardTitle></Link>
-            </CardHeader>
-            <CardContent>
-                <p className="text-text opacity-70 basetext">{props.post.description}</p>
-            </CardContent>
-            <CardFooter className="flex flex-row gap-x-2">
-                <FontAwesomeIcon icon={faUsers} />
-                <p className="text-text opacity-50 footertext">{props.post.followers}</p>
-            </CardFooter>
+        <Card className={`${props.classname} relative`} style={backgroundStyle}>
+            <div className={`${props.post.logo ? "bg-black bg-opacity-50 p-4" : ""} w-full h-full flex flex-col justify-between`}>
+                <CardHeader>
+                    {!props.post.logo && <img src={props.post.logo} alt={props.post.name} className="h-[125px] w-full object-cover rounded-xl" />}
+                    <Link href={props.post.uid ? `/posts/${props.post.uid}` : ""}>
+                        <CardTitle className="text-white">{props.post.name}</CardTitle>
+                    </Link>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-white opacity-70 basetext">{props.post.description}</p>
+                </CardContent>
+                <CardFooter className="flex flex-row gap-x-2 text-white">
+                    <FontAwesomeIcon icon={faUsers} />
+                    <p className="text-white opacity-50 footertext">{props.post.followers}</p>
+                </CardFooter>
+            </div>
         </Card>
     );
 };

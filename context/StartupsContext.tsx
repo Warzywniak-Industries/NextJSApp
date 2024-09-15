@@ -168,10 +168,10 @@ export default function StartupsProvider(props: { children: any }) {
     new_startup.uid = generateSlug(startup.name);
 
     // Upload images
-    // new_startup.logo = await uploadImage(startup.images[0], new_startup.uid);
-    // for (let i = 1; i < startup.images.length; i++) {
-    //   new_startup.thumbails.push(await uploadImage(startup.images[i], new_startup.uid));
-    // }
+     new_startup.logo = await uploadImage(startup.images[0], new_startup.uid);
+     for (let i = 1; i < startup.images.length; i++) {
+       new_startup.thumbails.push(await uploadImage(startup.images[i], new_startup.uid));
+     }
 
     setDoc(doc(db, 'startups', new_startup.uid), new_startup)
     .then(() => {
