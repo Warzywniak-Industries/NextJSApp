@@ -56,7 +56,7 @@ export default function PostCarousel() {
             <div className="flex flex-row justify-between">
                 <h2 className="boldheader3">Browse sucessfull startups</h2>
                 <Button className="text-text boldbasetext cursor-pointer opacity-70 hover:opacity-100">
-                    <Link href="/browse">View all</Link>
+                    <Link href="/posts">View all</Link>
                 </Button>
             </div>
             <div className="flex flex-row justify-center">

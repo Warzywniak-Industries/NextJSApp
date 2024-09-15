@@ -15,7 +15,7 @@ export const NavLinks = [
     },
     {
         label: "Dashboard",
-        path: "/dashboard",
+        path: "/panel",
     },
     {
         label: "Login",
