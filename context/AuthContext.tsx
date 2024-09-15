@@ -28,7 +28,6 @@ interface AuthContextType {
   logout: () => Promise<void>;
   fetchUserStartups: (userDataObj: UserData) => Promise<any>;
   startupIds: string[];
-  waitForAuth: () => Promise<void>;
   loading: boolean;
 }
 
@@ -42,7 +41,6 @@ const defaultAuthContext: AuthContextType = {
   logout: async () => {},
   fetchUserStartups: async () => [],
   startupIds: [],
-  waitForAuth: async () => {},
   loading: false,
 };
 
@@ -121,16 +119,7 @@ export function AuthProvider(props: { children: any }) {
     });
   }
 
-  async function waitForAuth(): Promise<void> {
-    await new Promise<void>((resolve) => {
-        const interval = setInterval(() => {
-          console.log(loading);
-            if (!loading) {
-                clearInterval(interval);
-                resolve();
-            }
-        }, 500);
-  })};
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -147,17 +136,19 @@ export function AuthProvider(props: { children: any }) {
             setUserDataObj(docSnap.data() as UserData);
           } else {
             console.log('No user data found');
-            setUserDataObj(null); // Handle case when no data is found
+            setUserDataObj(null); 
           }
         } catch (err: any) {
           console.log('Error fetching user data:', err.message);
         } finally {
-          setLoading(false);
+          setLoading(false);  // Ensure loading is false after data fetch attempt
+          console.log("Reached the end A")
         }
       } else {
         setUserDataObj(null);
+        setLoading(false);  // Ensure loading is false when user is null
+        console.log("Reached the end B")
       }
-      setLoading(false);
     });
   
     return unsubscribe;
@@ -187,7 +178,6 @@ export function AuthProvider(props: { children: any }) {
     logout,
     fetchUserStartups,
     startupIds,
-    waitForAuth,
     loading
   }
   return (

@@ -47,11 +47,16 @@ export default function StartupsProvider(props: { children: any }) {
 
 // Call the function to populate the startups in Firestore
   async function getStartups(tolerance: number): Promise<ProcessedStartup[]> {
-    if (!userDataObj) {
-      return [];
+    let prefs;
+    if(userDataObj)
+    {
+      prefs = userDataObj.prefereces
+    }
+    else{
+      prefs = defaultPrefereces
     }
     // Fetch startups from database
-    const data = await fetchStartups(userDataObj.prefereces || defaultPrefereces)
+    const data = await fetchStartups(prefs)
 
     console.log(data)
 
