@@ -8,7 +8,7 @@ export default function HeroBanner() {
     <div className="w-full flex flex-col md:flex-row bg-background self-strech items-center justify-center px-[32px] py-16 gap-y-16 md:px-[11.25%]">
         <div>
             <h1 className="boldheader2 md:boldheader1 shrink-0 text-text">
-                Transforming Ideas <br className="visible md:hidden"/> into <span className="bg-gradient-to-r from-primary to-secondary inline-block text-transparent bg-clip-text">Reality</span>
+                Transforming Ideas <br className="visible"/> into <span className="bg-gradient-to-r from-primary to-accent inline-block text-transparent bg-clip-text leading-5">Reality</span>
             </h1>
         </div>
         <div className="flex md:w-[32%] md:max-w-[432px] md:max-h-[464px]">

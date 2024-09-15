@@ -14,11 +14,10 @@ import {
 } from "@/components/ui/carousel"
 import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
-import { Startup } from "@/context/StartupsContext";
-import { PostOverview } from "@/types/Post";
+import { Startup } from "@/types/Startup";
 
 export default function PostCarousel() {
-    const [posts, setPosts] = useState<PostOverview[]>([]);
+    const [posts, setPosts] = useState<Startup[]>([]);
 
     const startupsCollection = collection(db, 'startups') 
     
@@ -29,15 +28,17 @@ export default function PostCarousel() {
             const response = await getDocs(q); // Execute the query
             
             const data = response.docs.map((doc) => doc.data() as Startup).map((item) => {
-                const post: PostOverview = {
-                    title: item.name || "Untitled",  // Fallback for missing fields
+                const startup: Startup = {
+                    name: item.name || "Untitled",  // Fallback for missing fields
                     description: item.description || "No description available",
                     followers: item.followers || 0,  // Fallback if followers is missing
-                    slug: "",
-                    state: "Draft",
-                    thumbnail: ""
+                    uid: "",
+                    logo: "",
+                    thumbails: [],
+                    tags: [],
+                    website: "",
                 };
-                return post;
+                return startup;
             });
             
             // Set the fetched posts in state
@@ -49,10 +50,10 @@ export default function PostCarousel() {
 
     useEffect(() => {
         getPosts();
-    }, []);
+    }, [posts]);
 
     return (
-        <div className="flex flex-col px-8 md:px-[11.25%] gap-y-6 w-full">
+        <div className="flex flex-col px-8 md:px-[11.25%] gap-y-12 w-full">
             <div className="flex flex-row justify-between">
                 <h2 className="boldheader3">Browse sucessfull startups</h2>
                 <Button className="text-text boldbasetext cursor-pointer opacity-70 hover:opacity-100">

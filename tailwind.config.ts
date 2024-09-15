@@ -32,8 +32,8 @@ const config = {
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: 'var(--card)',
+					foreground: 'var(--card-foreground)'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -65,18 +65,6 @@ const config = {
 				background: 'var(--background)',
 				foreground: 'var(--foreground)',
 				foreground_secondary: 'var(--foreground-secondary)',
-			secondary: {
-				DEFAULT: 'var(--secondary)',
-				foreground: 'hsl(var(--secondary-foreground))'
-			},
-			accent: {
-				DEFAULT: 'var(--accent)',
-				foreground: 'hsl(var(--accent-foreground))'
-			},
-			card: {
-				DEFAULT: 'var(--card)',
-				foreground: 'var(--card-foreground)'
-			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
@@ -150,6 +138,9 @@ const config = {
   },
   safelist: [
 	"max-w-72",
+	"align-left",
+	"align-center",
+	"align-right",
   ],
   plugins: [require("tailwindcss-animate")],
 } satisfies Config

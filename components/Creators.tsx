@@ -2,27 +2,29 @@
 import React from "react";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 
+import { Artur, Kacper, Wojciech } from "@/img";
+
 const people = [
   {
     id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
+    name: "Artur Niemiec",
+    designation: "Devops",
     image:
-      "/img/Artur.png",
+      Artur.src,
   },
   {
     id: 2,
-    name: "Robert Johnson",
-    designation: "Product Manager",
+    name: "Kacper Baum-Azbum",
+    designation: "Frontend Developer",
     image:
-      "/img/Artur.png",
+      Kacper.src,
   },
   {
     id: 3,
-    name: "Jane Smith",
-    designation: "Data Scientist",
+    name: "Wojciech Zawistowski",
+    designation: "Frontend Developer",
     image:
-      "/img/Artur.png",
+      Wojciech.src,
   },
 ];
  

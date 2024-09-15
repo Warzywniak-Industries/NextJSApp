@@ -12,8 +12,9 @@
     --background: #f3fcf9;
     --foreground: #051610;
     --foreground-secondary: #eafaf5;
-    --card: #96c1e9;
-    --card-foreground: #051610;
+    /* ##96c1e9; #d2e7fa*/
+    --card: #516beb; 
+    --card-foreground: #eafaf5;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: #36d3b1;

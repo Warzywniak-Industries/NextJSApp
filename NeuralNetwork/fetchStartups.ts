@@ -21,7 +21,8 @@ function cosineSimilarity(A: Weights, B: Weights, userMagnitude: number): number
 
 
 export async function fetchStartups(userWeights: Weights): Promise<ProcessedStartup[]> {
-    const startupsCollection = collection(db, 'weightedStartups') as CollectionReference<DocumentData>;
+    const startupsCollection = collection(db, 'startups') as CollectionReference<DocumentData>;
+    console.log("Triggered")
     const userMagnitude = magnitude(userWeights);
 
     try {
