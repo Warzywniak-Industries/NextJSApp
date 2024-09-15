@@ -67,7 +67,6 @@ export default function StartupsProvider(props: { children: any }) {
   }
 
   async function getStartupByUid(uid: string): Promise<Startup | null> {
-    console.log("TEST")
     if (!user) {
       console.log("User not logged in");
       return null
