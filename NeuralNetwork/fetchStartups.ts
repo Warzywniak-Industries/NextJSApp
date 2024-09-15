@@ -32,7 +32,8 @@ export async function fetchStartups(userWeights: Weights): Promise<ProcessedStar
             if (data.weights == null || userWeights ==  null) return data;
 
             data.similarity = cosineSimilarity(userWeights, data.weights, userMagnitude)
-            return data
+            data.uid = doc.id;
+            return data;
         });
 
         // Sort startups by similarity in descending order

@@ -58,7 +58,7 @@ export default async function PostEditor() {
           <Card className="space-y-2 shadow-md bg-white">
             <CardContent>
               <div className='space-y-2 mt-4'>
-                <div className='relative' dangerouslySetInnerHTML={{ __html: description }}>
+                <div className='relative starter-desc' dangerouslySetInnerHTML={{ __html: description }}>
                 </div>
               </div>
             </CardContent>
@@ -81,12 +81,15 @@ export default async function PostEditor() {
                 <Label htmlFor="price">Target Funding: <Badge>{formatPrice(raised)}</Badge> / <Badge>{formatPrice(target, true)}</Badge></Label>
                 <div className="w-full bg-gray-200 rounded-full h-8 shadow-inner">
                   <div
-                    className="flex font-bold items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 h-8 rounded-full shadow-md animate-pulse"
+                    className="flex font-bold items-center justify-center bg-gradient-to-r from-primary to-accent h-8 rounded-full shadow-md animate-pulse"
                     style={{ width: `${progress}%` }}
                   >
                     {progress}%
                   </div>
                 </div>
+              </div>
+              <div className="space-y-2 flex justify-center">
+                <Button className='mt-4 rounded-full px-12'>Donate 🎉</Button>
               </div>
             </CardContent>
           </Card>
@@ -96,7 +99,7 @@ export default async function PostEditor() {
                 {raised >= goal.price && (
                   <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-white rounded-md" />
-                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-400 to-blue-500 [mask-image:linear-gradient(white,transparent_75%)]" />
+                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary to-secondary [mask-image:linear-gradient(white,transparent_75%)]" />
                   </div>
                 )}
                 <CardHeader>

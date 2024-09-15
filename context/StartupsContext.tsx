@@ -133,10 +133,16 @@ export default function StartupsProvider(props: { children: any }) {
       description: startup.description,
       logo: '',
       thumbails: [],
+      location: startup.location,
+      created: new Date(),
       tags: startup.tags,
       website: startup.website,
       followers: startup.followers,
-      weights: generateWeights(startup.tags)
+      weights: generateWeights(startup.tags),
+      target: 0,
+      raised: 0,
+      authors: [],
+      goals: []
     }
 
     // Generate unique ID for the startup
