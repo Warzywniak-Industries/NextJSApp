@@ -13,6 +13,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { useStartups } from '@/context/StartupsContext';
 import { ProcessedStartup } from '@/types/Startup';
+import { LoadingAnimation } from '@/components/ui/loading-animation';
 
 export default function PostEditor({ params }: { params: { uid: string } }) {
   const [startup, setStartup] = useState<ProcessedStartup | null>(null);
@@ -40,7 +41,7 @@ export default function PostEditor({ params }: { params: { uid: string } }) {
     }
   }, [startup]);
 
-  if(!startup) return <div>Loading....</div>;
+  if(!startup) return <div className='w-full flex justify-center items-center mt-20'><LoadingAnimation /></div>;
 
   const title = startup.name;
   const description = startup.description;

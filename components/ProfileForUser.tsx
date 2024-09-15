@@ -4,6 +4,7 @@ import Avatar from 'boring-avatars';
 import { useParams } from 'next/navigation';
 import { db } from '@/firebase';
 import { collection, doc, getDoc } from 'firebase/firestore';
+import { LoadingAnimation } from './ui/loading-animation';
 
 const ProfileForUser = () => {
     const { uid } = useParams();  // Get the user ID from the URL params
@@ -36,7 +37,7 @@ const ProfileForUser = () => {
     }, [uid, userDataObj]);
 
     if (data === null) {
-        return <div>Loading...</div>;
+        return <div className='w-max flex justify-center'>Loading...<LoadingAnimation /></div>;
     }
 
     return (
