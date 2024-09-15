@@ -102,6 +102,23 @@ export default function StartupsProvider(props: { children: any }) {
       const updatedUser = { ...userDataObj };
       updatedUser.startupIds.push(new_startup.uid);
       setDoc(doc(db, 'users', user.uid), updatedUser);
+    })
+    .catch((error) => {
+      // Create a new document if it doesn't exist
+      if (error.code === 'not-found') {
+      setDoc(doc(db, 'startups', new_startup.uid), startup)
+      .then(() => {
+        // Update the user's StartupIds
+        const updatedUser = { ...userDataObj };
+        updatedUser.startupIds.push(new_startup.uid);
+        setDoc(doc(db, 'users', user.uid), updatedUser);
+      })
+      .catch((error) => {
+        console.error('Error creating new document:', error);
+      });
+      } else {
+      console.error('Error updating document:', error);
+      }
     });
   }
 
