@@ -67,12 +67,14 @@ export default function StartupsProvider(props: { children: any }) {
   }
 
   async function getStartupByUid(uid: string): Promise<any> {
+    console.log("TEST")
     if (!user) {
-      return;
+      return console.log("User not logged in");
     }
     return getDocs(collection(db, 'startups')).then(
       (querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          console.log(doc.data().uid)
           if (doc.data().uid === uid) {
             return doc.data();
           }

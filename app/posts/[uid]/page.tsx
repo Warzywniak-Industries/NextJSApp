@@ -11,18 +11,37 @@ import { Gallery } from "@/components/post/gallery"
 import '@/fontawesome';
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { useRouter } from 'next/router'
 import { useStartups } from '@/context/StartupsContext';
 import { ProcessedStartup } from '@/types/Startup';
 
-export default async function PostEditor() {
-  const router = useRouter();
-  const { uid } = router.query;
+export default function PostEditor({ params }: { params: { uid: string } }) {
+  const [startup, setStartup] = useState<ProcessedStartup | null>(null);
+  const { uid } = params;
   const { getStartupByUid } = useStartups();
 
-  if (!uid) return console.log("Post uid not found");
-  const startup = await getStartupByUid(uid as string) as ProcessedStartup;
-  
+  useEffect(() => {
+    const fetchStartup = async () => {
+      try {
+        const startup = await getStartupByUid(uid);
+        setStartup(startup);
+        console.log("xdddd",startup);
+        return startup;
+      } catch (error) {
+        console.error("An error occured when fetching post by uid!", error);
+    } finally {
+      console.log("No startup found");
+    }
+    }
+    if(!uid){
+      console.log("No uid found");
+    }
+    else{
+      fetchStartup();
+    }
+  }, [startup]);
+
+  if(!startup) return <div>Loading....</div>;
+
   const title = startup.name;
   const description = startup.description;
   const images = [startup.logo, ... startup.thumbails as string[]];
@@ -30,7 +49,8 @@ export default async function PostEditor() {
 
   const target = 5000;
   const raised = 3270.34;
-  const progress = Math.round(raised / target * 1000) / 10; const goals = Array<Goal>(
+  const progress = Math.round(raised / target * 1000) / 10;
+  const goals = Array<Goal>(
     { id: 1, title: 'Start', price: 500, icon: "a", rewards: ["we may not drop this", "we can eat food"] },
     { id: 2, title: 'Mid', price: 2000, icon: "a", rewards: ["there is a chance we will succeed", "we will spend all the money stupidly"] },
     { id: 3, title: 'End game :O', price: 4000, icon: "a", rewards: ["we will succeed", "we spent all the money stupidly"] }
@@ -58,7 +78,7 @@ export default async function PostEditor() {
           <Card className="space-y-2 shadow-md bg-white">
             <CardContent>
               <div className='space-y-2 mt-4'>
-                <div className='relative starter-desc' dangerouslySetInnerHTML={{ __html: description }}>
+                <div className='relative' dangerouslySetInnerHTML={{ __html: description }}>
                 </div>
               </div>
             </CardContent>
@@ -81,15 +101,12 @@ export default async function PostEditor() {
                 <Label htmlFor="price">Target Funding: <Badge>{formatPrice(raised)}</Badge> / <Badge>{formatPrice(target, true)}</Badge></Label>
                 <div className="w-full bg-gray-200 rounded-full h-8 shadow-inner">
                   <div
-                    className="flex font-bold items-center justify-center bg-gradient-to-r from-primary to-accent h-8 rounded-full shadow-md animate-pulse"
+                    className="flex font-bold items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 h-8 rounded-full shadow-md animate-pulse"
                     style={{ width: `${progress}%` }}
                   >
                     {progress}%
                   </div>
                 </div>
-              </div>
-              <div className="space-y-2 flex justify-center">
-                <Button className='mt-4 rounded-full px-12'>Donate 🎉</Button>
               </div>
             </CardContent>
           </Card>
@@ -99,7 +116,7 @@ export default async function PostEditor() {
                 {raised >= goal.price && (
                   <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-white rounded-md" />
-                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-primary to-secondary [mask-image:linear-gradient(white,transparent_75%)]" />
+                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-400 to-blue-500 [mask-image:linear-gradient(white,transparent_75%)]" />
                   </div>
                 )}
                 <CardHeader>
