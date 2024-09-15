@@ -50,7 +50,7 @@ async function testFirestoreConnection() {
 testFirestoreConnection();
 
   return (
-    <div className="flex flex-col gap-y-6 overflow-x-hidden w-full">
+    <div className="flex flex-col gap-y-12 overflow-x-hidden w-full">
       <HeroBanner/>
       <LadingPageTimeline/>
       <PostCarousel/>
