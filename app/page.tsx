@@ -10,6 +10,7 @@ import { db } from "@/firebase";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { Creators } from "@/components/Creators";
+import Avatar from 'boring-avatars';
 
 export default function Home() {
 

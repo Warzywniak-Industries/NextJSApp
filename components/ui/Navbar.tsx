@@ -7,7 +7,18 @@ import { ImageSpacer2 } from "@/img";
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const { user } = useAuth()
+    const { user, userDataObj } = useAuth()
+
+    const UserLogged = () => {
+        if(!userDataObj) return
+        return (
+            <div className="flex h-12 items-center">
+                <h1 className="pr-3">Hi {userDataObj.firstName}</h1>
+                <Avatar name={userDataObj.firstName} className="h-[70%]"/>
+            </div>
+        )
+        
+    }
 
     return (
         <div className="flex flex-col w-full overflow-x-hidden">
@@ -20,7 +31,7 @@ const Navbar: React.FC = () => {
                         <a href="/posts" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
                             <h1>BROWSE</h1>
                         </a>
-                        <a href="/login"  className="font-extralight">Login / Sign Up</a>
+                        { user ? <UserLogged/> : <a href="/login"  className="font-extralight">Login / Sign Up</a>}
                     </div>
                 </div>
             </nav>
