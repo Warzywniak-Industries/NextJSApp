@@ -39,23 +39,26 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         : {};
 
     return (
-        <Card className={`${props.classname} relative`} style={backgroundStyle}>
-            <div className={`${props.post.logo ? "bg-black bg-opacity-50 p-4" : ""} w-full h-full flex flex-col justify-between`}>
-                <CardHeader>
-                    {!props.post.logo && <img src={props.post.logo} alt={props.post.name} className="h-[125px] w-full object-cover rounded-xl" />}
-                    <Link href={props.post.uid ? `/posts/${props.post.uid}` : ""}>
+        <Link href={props.post.uid ? `/posts/${props.post.uid}` : ""}>
+        <Card className={`${props.classname} relative group h-full`} style={backgroundStyle}>
+            <div className={`${props.post.logo ? "bg-black bg-opacity-50 group-hover:bg-opacity-90 p-4 transition duration-300 ease-in-out h-48" : ""} w-full h-full flex flex-col justify-between rounded-xl`}>
+
+                {/* Title and followers hidden by default, shown on hover */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out flex flex-col items-stretch h-full">
+                    <CardHeader>
                         <CardTitle className="text-white">{props.post.name}</CardTitle>
-                    </Link>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-white opacity-70 w-full basetext truncate">{props.post.description}</p>
-                </CardContent>
-                <CardFooter className="flex flex-row gap-x-2 text-white">
-                    <FontAwesomeIcon icon={faUsers} />
-                    <p className="text-white opacity-50 footertext">{props.post.followers}</p>
-                </CardFooter>
+                        
+                            
+                        
+                    </CardHeader>
+                    <CardFooter className="flex flex-row gap-x-2 text-white bottom-0">
+                        <FontAwesomeIcon icon={faUsers} />
+                        <p className="text-white opacity-50 footertext">{props.post.followers}</p>
+                    </CardFooter>
+                </div>
             </div>
         </Card>
+        </Link>
     );
 };
 
