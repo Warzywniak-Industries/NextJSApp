@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useEffect, useState} from "react";
-import { Post } from "@/types/Post";
+import { PostOverview } from "@/types/Post";
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PostCardProps {
-    className?: string;
-    post?: Post;
+    post?: PostOverview;
     index?: number;
 }
 
 const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
-    if (!props.post){
+    if (!props.post || props.post == null){
         return (
             <Card className={`${props.className} max-w-[350px]`}>
                 <CardHeader >
@@ -39,7 +38,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                 <p className="text-text opacity-70 basetext">{props.post.description}</p>
             </CardContent>
             <CardFooter>
-                <p className="text-text opacity-50 footertext">{props.post.date}</p>
+                <p className="text-text opacity-50 footertext">cxzxcz</p>
             </CardFooter>
         </Card>
     );

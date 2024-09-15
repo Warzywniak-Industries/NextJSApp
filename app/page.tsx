@@ -51,7 +51,7 @@ testFirestoreConnection();
     <div className="flex flex-col gap-y-6 overflow-x-hidden w-full">
       <HeroBanner/>
       <LadingPageTimeline/>
-      <PostCarousel />
+      <PostCarousel/>
     </div>
   );
 }

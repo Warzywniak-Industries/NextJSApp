@@ -6,6 +6,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { auth, db } from '@/firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
+import { Weights } from './StartupsContext'
+import { pre } from 'framer-motion/client'
 
 interface UserData {
   email: string;
@@ -13,6 +15,7 @@ interface UserData {
   lastName: string;
   uid: string;
   accType: "StartupOwner" | "Company" | "Admin";
+  prefereces: Weights;
 }
 
 interface AuthContextType {
@@ -65,7 +68,19 @@ export function AuthProvider(props: { children: any }) {
           firstName,
           lastName,
           uid: user.uid,
-          accType: "StartupOwner" // You may want to add this or other fields as needed
+          accType: "StartupOwner", 
+          prefereces: {
+            technology: 0,
+            finances: 0,
+            philanthropy: 0,
+            mobility: 0,
+            logistics: 0,
+            health: 0,
+            education: 0,
+            entertainment: 0,
+            environment: 0,
+            security: 0,
+          }
         });
         console.log('User data successfully updated');
       })
