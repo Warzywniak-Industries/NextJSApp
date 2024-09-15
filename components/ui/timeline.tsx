@@ -7,7 +7,7 @@ import {
 } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
-interface TimelineEntry {
+export interface TimelineEntry {
   title: string;
   content: React.ReactNode;
 }
@@ -37,9 +37,9 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       className="w-full dark:bg-neutral-950 font-sans md:px-10"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="semiboldheader1 mb-4 text-black dark:text-white max-w-4xl">
-          Let’s build from <span className="bg-gradient-to-r from-primary to-secondary inline-block text-transparent bg-clip-text font-bold">here</span>
+      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10 bg-white rounded-3xl">
+        <h2 className="semiboldheader1 mb-4 text-text max-w-4xl">
+          Let’s build from <span className="bg-gradient-to-r from-primary to-accent inline-block text-transparent bg-clip-text font-bold">here</span>
         </h2>
         <p className="text-text boldbasetext max-w-sm">
           Our platform can help you build a better product while advertising it to potential investors.
@@ -56,7 +56,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-secondary dark:bg-black flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full bg-accent p-2" />
               </div>
-              <h3 className="hidden md:block semiboldheader3 md:pl-20 md:text-5xl font-bold text-text">
+              <h3 className="hidden md:block semiboldheader3 md:pl-20 md:text-5xl font-bold text-text w-auto">
                 {item.title}
               </h3>
             </div>

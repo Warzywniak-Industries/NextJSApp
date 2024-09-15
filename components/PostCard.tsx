@@ -5,6 +5,10 @@ import { ProcessedStartup, Startup } from "@/types/Startup";
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import "../fontawesome";
+
 interface PostCardProps {
     classname?: string;
     post?: Startup | ProcessedStartup;
@@ -38,7 +42,8 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
             <CardContent>
                 <p className="text-text opacity-70 basetext">{props.post.description}</p>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex flex-row gap-x-2">
+                <FontAwesomeIcon icon={faUsers} />
                 <p className="text-text opacity-50 footertext">{props.post.followers}</p>
             </CardFooter>
         </Card>

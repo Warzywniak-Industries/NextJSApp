@@ -12,8 +12,9 @@
     --background: #f3fcf9;
     --foreground: #051610;
     --foreground-secondary: #eafaf5;
-    --card: #96c1e9;
-    --card-foreground: #051610;
+    /* ##96c1e9; #d2e7fa*/
+    --card: #516beb; 
+    --card-foreground: #eafaf5;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: #36d3b1;
@@ -120,4 +121,27 @@
 
 .slider-nav .slick-slide {
   @apply px-2;
+}
+
+.starter-desc h1 {
+  @apply text-2xl font-bold font-poppins text-gray-800 leading-tight tracking-wide;
+}
+
+.starter-desc h2 {
+  @apply text-lg font-semibold font-inter text-gray-700 leading-snug mt-4 tracking-wider;
+}
+
+.starter-desc h3,
+.starter-desc h4,
+.starter-desc h5,
+.starter-desc h6 {
+  @apply text-base font-inter text-gray-600 mt-2 leading-relaxed tracking-normal;
+}
+
+.starter-desc ul {
+  @apply list-disc list-inside pl-5 space-y-2 text-gray-600;
+}
+
+.starter-desc ol {
+  @apply list-decimal list-inside pl-5 space-y-2 text-gray-600;
 }

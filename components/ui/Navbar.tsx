@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
             <nav className="w-full py-2 bg-[#d2e7fa] items-center">
                 <div className="flex justify-between w-[80%] mx-auto items-center">
                     <div className="flex gap-6 items-center">
-                        <a href="/" className="mr-4 font-extrabold text-xl">StartupHub</a>
+                        <a href="/" className="mr-4 font-extrabold text-2xl">StartupHub</a>
                     </div>
                     <div className="flex gap-6 items-center">
                         <a href="/posts" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
