@@ -53,7 +53,7 @@ export default function PostEditor() {
     }
     const data = await response.json();
     setIsGeneratingDescription(false);
-    updateDescriptionLineByLine(data.choices[0].message.content);
+    updateDescriptionLineByLine(data.choices[0].message.content.replace('"', "'"));
   };
 
   const generateTags = async () => {
@@ -63,9 +63,10 @@ export default function PostEditor() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: `{"messages": [{"role": "user", "content": "Your role is to create a Startup tags for project titled: '${title}' with description: '${description}'. The tags should be relevant to the project and help users find it. Tag should be a single word and separated by comma. Generate up to 5 tags."}]}`,
+      body: `{"messages": [{"role": "user", "content": "Your role is to create a Startup tags for project titled: '${title}' with description: '${description}'. The tags should be relevant to the project and help users find it. Tag should be a single word and separated by comma. Generate up to 5 tags. Prefere tags from the following list: 'Technology', 'Financees', 'Healthcare', 'Education', 'Food', 'Travel', 'Fashion', 'Entertainment', 'Sports', 'Art', 'Music', 'Gaming'. If there is a tag outside of that list that would fit better, you can use it."}]}`,
     });
     if (!response.ok) {
+      setIsGeneratingTags(false);
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
@@ -89,9 +90,9 @@ export default function PostEditor() {
     await postStartup(incompleteStartup);
   }
 
-  useEffect(() => {
-    if (!loading && (!user || !userDataObj)) router.push('/login');
-  }, [user])
+  // useEffect(() => {
+  //   if (!loading && (!user || !userDataObj)) router.push('/login');
+  // }, [user])
 
   return (
     <StartupsProvider>

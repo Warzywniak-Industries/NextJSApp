@@ -97,21 +97,36 @@ export default function StartupsProvider(props: { children: any }) {
           .replace(/[\s\W-]+/g, '-') // Replace spaces and non-word characters with hyphens
           .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
     }
-    function generateWeights(tags: string[]): Weights {
-      let weights = {
-        technology: 1,
-        finances: 1,
-        philanthropy: 1,
-        mobility: 1,
-        logistics: 1,
-        health: 1,
-        education: 1,
-        entertainment: 1,
-        environment: 1,
-        security: 1
-      }
 
-      return weights
+    async function fetchWeights(title:string, description:string, tags: string[]): Promise<Response> {
+      return await fetch(`${process.env.NEXT_PUBLIC_OPENAI_URL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: `{`+
+          `"max_tokens": 90,` +
+          `"temperature": 0.7,` +
+          `"messages": [{"role": "user", "content": "Your role is to asign weights to a given startup: '${title}' with description: '${description}'. The weights have be in the range of 0 to 10. return a json response with the weights for each category. Output should look like this: {technology: 0, finances: 0, philanthropy: 0, mobility: 0, logistics: 0, health: 0, education: 0, entertainment: 0, environment: 0, security: 0}. You have 20 points to distribute between the categories."}]}`,
+      });
+    }
+
+
+    async function generateWeights(title:string, description:string, tags: string[]): Promise<Weights> {
+      let response = await fetchWeights(title, description, tags);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data2 = await response.json();
+      const text = data2.choices[0].message.content;
+      const expectedJson = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+      try {
+        const parsedJson = JSON.parse(expectedJson);
+        return parsedJson;
+      } catch (error) {
+        console.error('Invalid JSON, retrying...');
+        return generateWeights(title, description, tags);
+      }
     }
     async function uploadImage(file: File, uid: string): Promise<string> {
       // Check if the file is provided
@@ -143,7 +158,7 @@ export default function StartupsProvider(props: { children: any }) {
       tags: startup.tags,
       website: startup.website,
       followers: startup.followers,
-      weights: generateWeights(startup.tags),
+      weights: await generateWeights(startup.name, startup.description, startup.tags),
       target: 0,
       raised: 0,
       authors: [],
