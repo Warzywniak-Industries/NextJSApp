@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PostCardProps {
+    className?: string;
     post?: Post;
     index?: number;
 }
@@ -13,23 +14,23 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
     if (!props.post){
         return (
-            <Card>
-                <CardHeader>
-                    <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-                    <Skeleton className="h-4 w-[250px]" />
+            <Card className={`${props.className} max-w-[350px]`}>
+                <CardHeader >
+                    <Skeleton className="h-[125px] w-full rounded-xl" />
+                    <Skeleton className="h-4 w-full" />
                 </CardHeader>
                 <CardContent>
-                    <Skeleton className="h-4 w-[250px]" />
+                    <Skeleton className="h-4 w-full" />
                 </CardContent>
                 <CardFooter>
-                    <Skeleton className="h-2 w-[250px]" />
+                    <Skeleton className="h-2 w-full" />
                 </CardFooter>
             </Card>
         );
     };
 
     return (
-        <Card>
+        <Card className={props.className}>
             <CardHeader>
                 <img src={props.post.thumbnail}/>
                 <CardTitle>{props.post.title}</CardTitle>
