@@ -4,6 +4,7 @@ import React, { useEffect, useState} from "react";
 import { ProcessedStartup, Startup } from "@/types/Startup";
 import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -37,7 +38,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
         <Card className={props.classname}>
             <CardHeader>
                 <img src={props.post.logo}/>
-                <CardTitle>{props.post.name}</CardTitle>
+                <Link href={props.post.uid? `/posts/${props.post.uid}` : ""}><CardTitle>{props.post.name}</CardTitle></Link>
             </CardHeader>
             <CardContent>
                 <p className="text-text opacity-70 basetext">{props.post.description}</p>
