@@ -20,8 +20,8 @@ const Navbar: React.FC = () => {
                     <a href="/" className="mr-4 font-extrabold text-xl">StartupHub</a>
                 </div>
                 <div className="flex gap-6 items-center">
-                    <a href="/login" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
-                        <h1>START A CAMPAIGN</h1>
+                    <a href="/posts" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
+                        <h1>BROWSE</h1>
                     </a>
                     <a href="/login"  className="font-extralight">Login / Sign Up</a>
                 </div>

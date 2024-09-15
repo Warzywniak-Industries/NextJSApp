@@ -9,6 +9,7 @@ import PostCarousel from "@/components/PostCarousel";
 import { db } from "@/firebase";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
+import { Creators } from "@/components/Creators";
 
 export default function Home() {
 
@@ -52,6 +53,7 @@ testFirestoreConnection();
       <HeroBanner/>
       <LadingPageTimeline/>
       <PostCarousel/>
+      <Creators/>
     </div>
   );
 }
