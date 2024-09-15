@@ -40,7 +40,7 @@ export default function StartupsList() {
                     key={index} 
                     post={startup} 
                     classname={cn(
-                        "max-w-[350px] min-w-[250px] w-full",
+                        "text-foreground_secondary max-w-[350px] min-w-[250px] w-full",
                         (index%2) === 0 ? "w-[25%] flex-grow" : "w-[38%]"
                     )}
                 />

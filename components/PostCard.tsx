@@ -48,7 +48,7 @@ const PostCard: React.FC<PostCardProps> = (props: PostCardProps) => {
                     </Link>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-white opacity-70 basetext">{props.post.description}</p>
+                    <p className="text-white opacity-70 w-full basetext truncate">{props.post.description}</p>
                 </CardContent>
                 <CardFooter className="flex flex-row gap-x-2 text-white">
                     <FontAwesomeIcon icon={faUsers} />

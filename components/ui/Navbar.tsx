@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { ImageSpacer2 } from "@/img";
 import Avatar from "boring-avatars";
@@ -29,9 +30,12 @@ const Navbar: React.FC = () => {
                         <a href="/" className="mr-4 font-extrabold text-2xl">StartupHub</a>
                     </div>
                     <div className="flex gap-6 items-center">
-                        <a href="/posts" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
+                        <Link href="/posts" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
                             <h1>BROWSE</h1>
-                        </a>
+                        </Link>
+                        <Link href="/panel/posts/editor" className="border-2 p-2 rounded-none hover:bg-cyan-100 hover:rounded-xl transition-all ease-in-out duration-1000">
+                            <h1>CREATE</h1>
+                        </Link>
                         { user ? <UserLogged/> : <a href="/login"  className="font-extralight">Login / Sign Up</a>}
                     </div>
                 </div>
