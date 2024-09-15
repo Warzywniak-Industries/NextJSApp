@@ -90,10 +90,10 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="px-8 md:px-[11.25%] mx-auto p-4">
+    <div className="w-[80%] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="space-y-4 md:col-span-7">
-          <Card className='shadow-md'>
+          <Card className='shadow-md bg-white'>
             <CardHeader>
               <CardTitle className='flex items-center'>Images</CardTitle>
             </CardHeader>
@@ -101,7 +101,7 @@ export default function PostEditor() {
               <DropZone images={images} setImages={setImages} />
             </CardContent>
           </Card>
-          <Card className="space-y-2 shadow-md">
+          <Card className="space-y-2 shadow-md bg-white">
             <CardHeader>
               <CardTitle className='flex items-center'>Details</CardTitle>
             </CardHeader>
@@ -141,7 +141,7 @@ export default function PostEditor() {
           </Card>
         </div>
         <div className="space-y-4 md:col-span-5">
-          <Card className="shadow-md">
+          <Card className="shadow-md bg-white">
             <CardHeader>
               <CardTitle className='flex items-center'>New Startup <Button className='ms-auto' onClick={sendPost}>Create</Button></CardTitle>
             </CardHeader>

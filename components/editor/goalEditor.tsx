@@ -82,7 +82,7 @@ export function GoalEditor(props: GoalEditorProps) {
 
     return (
         <div>
-            <Card className="mb-6 shadow-md">
+            <Card className="mb-6 shadow-md bg-white">
                 <CardHeader>
                     <CardTitle>{editingId ? 'Edit Goal' : 'Goals'}</CardTitle>
                 </CardHeader>
@@ -143,7 +143,7 @@ export function GoalEditor(props: GoalEditorProps) {
             </Card>
             <div className="space-y-4">
                 {props.goals.map((goal) => (
-                    <Card key={goal.id} className='shadow-md'>
+                    <Card key={goal.id} className='shadow-md bg-white'>
                         <CardHeader>
                             <CardTitle className="flex justify-between items-center">
                                 <span>{goal.title}</span>
