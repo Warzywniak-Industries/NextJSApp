@@ -12,11 +12,6 @@ export interface Weights
     security: number
 }
 
-export interface WeightedStartup extends Weights {
-  uid: string;
-  name: string;
-  similarity?: number;
-}
 export interface Startup {
   uid: string
   name: string
@@ -26,6 +21,12 @@ export interface Startup {
   website: string
   followers: number
 }
+
+export interface ProcessedStartup extends Startup
+{
+  similarity: number
+}
+
 export interface IncompleteStartup {
   name: string
   description: string
