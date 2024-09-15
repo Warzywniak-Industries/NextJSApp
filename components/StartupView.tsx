@@ -53,10 +53,10 @@ export default function StartupView({ params }: { params: { uid: string } }) {
 
   if(!startup) return <div className='w-full flex justify-center items-center mt-20'><LoadingAnimation /></div>;
 
-  const images = [startup.logo, ... startup.thumbails as string[]];
-  const tags = startup.tags;
-  const title = startup.name;
-  const description = startup.description;
+  // const images = [startup.logo, ... startup.thumbails as string[]];
+  // const tags = startup.tags;
+  // const title = startup.name;
+  // const description = startup.description;
 
   const target = 5000;
   const raised = 3270.34;
@@ -83,13 +83,13 @@ export default function StartupView({ params }: { params: { uid: string } }) {
         <div className={`space-y-4 md:col-span-7 ${noThumbnail? "hidden" : "visible"}`}>
           <Card className='shadow-md bg-white'>
             <CardContent className='p-6'>
-              <Gallery images={images} />
+              <Gallery images={startup.thumbails ? [startup.logo, ... startup.thumbails as string[]] : Array<string>('/img/Wojciech.png')} />
             </CardContent>
           </Card>
           <Card className="space-y-2 shadow-md bg-white">
             <CardContent>
               <div className='space-y-2 mt-4'>
-                <div className='relative' dangerouslySetInnerHTML={{ __html: description }}>
+                <div className='relative' dangerouslySetInnerHTML={{ __html: startup.description }}>
                 </div>
               </div>
             </CardContent>
@@ -98,13 +98,13 @@ export default function StartupView({ params }: { params: { uid: string } }) {
         <div className="space-y-4 md:col-span-5">
           <Card className="shadow-md bg-white">
             <CardHeader>
-              <CardTitle className='flex items-center'>{title}</CardTitle>
+              <CardTitle className='flex items-center'>{startup.name}</CardTitle>
               <div className='flex'>
-                {tags.map((tag, i) => (
+                {startup.tags ? startup.tags.map((tag, i) => (
                   <Badge key={tag} variant="secondary" className="flex items-center gap-1 me-1 shadow-md">
                     {tag}
                   </Badge>
-                ))}
+                )) : <></>}
               </div>
             </CardHeader>
             <CardContent>

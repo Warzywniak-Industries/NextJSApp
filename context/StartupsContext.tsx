@@ -67,10 +67,6 @@ export default function StartupsProvider(props: { children: any }) {
   }
 
   async function getStartupByUid(uid: string): Promise<Startup | null> {
-    if (!user) {
-      console.log("User not logged in");
-      return null
-    }
     try{
       const docRef = await getDoc(doc(collection(db, 'startups'), uid));
       if (docRef.exists()) {
@@ -83,8 +79,6 @@ export default function StartupsProvider(props: { children: any }) {
       console.error(error)
       return null
     }
-    
-
   }
 
   async function postStartup(startup: IncompleteStartup) {

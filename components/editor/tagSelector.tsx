@@ -37,7 +37,7 @@ export function TagSelector(props: TagSelectorProps) {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full">
             <Input
                 type="text"
                 placeholder="Type a tag and press Enter"
