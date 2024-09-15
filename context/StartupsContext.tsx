@@ -5,7 +5,7 @@ import React from 'react'
 import { useAuth } from './AuthContext'
 import { Startup, Weights, IncompleteStartup, ProcessedStartup } from '@/types/Startup'
 import { db, storage } from '@/firebase'
-import { collection, CollectionReference, DocumentData, doc, setDoc, getDocs, getDoc } from 'firebase/firestore'
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface StartupsContextType {
