@@ -117,3 +117,7 @@
 .footertext{
   @apply text-xs font-inter;
 }
+
+.slider-nav .slick-slide {
+  @apply px-2;
+}
