@@ -5,7 +5,7 @@ import React from 'react'
 import { useAuth } from './AuthContext'
 import { Startup, Weights, IncompleteStartup, ProcessedStartup } from '@/types/Startup'
 import { db, storage } from '@/firebase'
-import { collection, CollectionReference, DocumentData, doc, setDoc, getDocs } from 'firebase/firestore'
+import { collection, CollectionReference, DocumentData, doc, setDoc, getDocs, getDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface StartupsContextType {
@@ -66,22 +66,25 @@ export default function StartupsProvider(props: { children: any }) {
     return data;
   }
 
-  async function getStartupByUid(uid: string): Promise<any> {
+  async function getStartupByUid(uid: string): Promise<Startup | null> {
     console.log("TEST")
     if (!user) {
-      return console.log("User not logged in");
+      console.log("User not logged in");
+      return null
     }
-    return getDocs(collection(db, 'startups')).then(
-      (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data().uid)
-          if (doc.data().uid === uid) {
-            return doc.data();
-          }
-        });
-      }).catch((e: Error) => {
-        console.error("An error occured when fetching post by uid!", e);
-      });
+    try{
+      const docRef = await getDoc(doc(collection(db, 'startups'), uid));
+      if (docRef.exists()) {
+        return docRef.data() as Startup;
+      }else{
+        console.log("No data")
+        return null
+      }
+    } catch(error) {
+      console.error(error)
+      return null
+    }
+    
 
   }
 
