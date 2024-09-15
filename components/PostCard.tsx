@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PostCardProps {
+    className: string;
     post?: PostOverview;
     index?: number;
 }
