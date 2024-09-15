@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "./ui/use-toast";
-
+import { useHistory} from 'react-router-dom';
 import { useAuth } from "../context/AuthContext";
 
 export default function Signup() {
@@ -56,6 +56,9 @@ export default function Signup() {
         return
     }
     handleSignUp()
+
+    const history = useHistory();
+    history.push('/');
   };
 
   async function handleSignUp() {
